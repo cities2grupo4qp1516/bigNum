@@ -1,0 +1,137 @@
+﻿<!DOCTYPE>
+<html ng-app="bigNumApp">
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US">  <!--<![endif]-->
+	<head>
+
+		<title>Cities2 - bigNum</title>
+
+		<!-- META DATA -->
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="author" content="">
+
+		<!-- CSS Global Compulsory -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="style.css" >
+
+		<!-- CSS Implementing Plugins -->
+		<!--<link rel="stylesheet" href="css/jquery.fullPage.css">-->
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/ionicons.min.css">
+		<link rel="stylesheet" href="css/animate.min.css">
+		<link rel="stylesheet" href="css/flexslider.css">
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/respond.min.js"></script>
+		<![endif]-->
+
+		<!--[if lt IE 11]>
+			<link rel="stylesheet" type="text/css" href="css/ie.css">
+		<![endif]-->
+
+		<!-- FONTS -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,700,900' rel='stylesheet' type='text/css'>
+		<script src="js/angular.min.js"></script>
+
+
+
+		<!-- JS -->
+		<script type="text/javascript" src="js/modernizr.js"></script>
+
+		<!-- FAVICONS -->
+		<link rel="shortcut icon" href="images/favicon.ico">
+		<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+	</head>
+	<body class="image-background">
+
+		<div id="preloader">
+			<div id="loading-animation">&nbsp;</div>
+		</div>
+
+		<header class="site-header">
+			<nav id="navigation" class="navigation site-nav navbar">
+				<div class="navbar-header onstart animated" data-animation="fadeInDown" data-animation-delay="1200">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false" aria-controls="navbar">
+						<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand">
+						<!-- Logo -->
+						<!--<img src="images/logo1.png" alt="" />-->
+						<h2>BigNumber</h2>
+					</a>
+				</div>
+			</nav>
+		</header>
+
+		<div id="fullpage">
+
+			<!-- Home Section -->
+			<div class="section home active" id="section0" ng-controller="BignumController">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<!-- Slide Content -->
+							<div class="slide-content">
+								<br>
+								<br>
+								<br>
+								<br>
+								<h1>{{bignum}}</h1>
+								<br>
+								<br>
+
+							<button class="border-button bt-border-white go-slide onstart animated fadeInUp visible" data-animation="fadeInUp" data-animation-delay="1000" data-slide="2" ng-click="double()">Duplicar BigNumber</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+		<nav class="socials-icons">
+
+		</nav>
+
+		<footer class="site-footer onstart animated" data-animation="fadeInUp" data-animation-delay="800">
+			<p class="copyright">© 2016 Cities2 - Todos los derechos reservados</p>
+		</footer>
+
+		<div class="viewport-border">
+			<div class="vb-l"></div>
+			<div class="vb-r"></div>
+			<div class="vb-t"></div>
+			<div class="vb-b"></div>
+		</div>
+
+		<!-- Overlay -->
+		<div class="overlay">
+			<div class="gradient-overlay background-blue-dark opacity-20"></div>
+		</div>
+
+		<!-- JS -->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/plugins.js"></script>
+
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/js.js"></script>
+		<script type="text/javascript" src="js/bignumber.js"></script>
+
+	</body>
+</html>
