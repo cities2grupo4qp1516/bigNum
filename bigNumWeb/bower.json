@@ -1,0 +1,28 @@
+{
+  "name": "bigNumWeb",
+  "homepage": "https://github.com/cities2grupo4qp1516/bigNum",
+  "authors": [
+    "marc martinez;javi castellvi;adria couceiro;nacho arroyo"
+  ],
+  "description": "cities2",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "bignumber"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.5.0",
+    "jquery": "^2.2.1",
+    "modernizr": "^3.3.1",
+    "respond": "^1.4.2",
+    "bootstrap": "^3.3.6"
+  }
+}
