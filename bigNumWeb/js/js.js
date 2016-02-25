@@ -144,4 +144,10 @@ bigNumApp.controller('BignumController', ['$scope', function ($scope) {
         xhr.send(xw.flush());
     };
 
+    $scope.random = function () {
+        xhr.open("GET", URL + "bignum");
+        xhr.responseType = "document";
+        xhr.send();
+    }
+
 }]);
