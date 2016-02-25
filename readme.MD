@@ -1,3 +1,18 @@
-Todos los ficheros hacen referencia a la API en node y express, logicamente hay que hacer un "npm install"
+# bigNumServer
+  - npm install
+  - bignum
+  - body-parser
+  - express
+  - express-xml-bodyparser
+  - http
+  - xml
 
-La carpeta web es la unica que no tiene que ver con la api, es lo que dice, la web
+# bigNumWeb
+  - bower install
+  - angularjs
+  - bootstrap
+  - jquery
+  - modernizr
+  - respond
+  - XMLWriter
+

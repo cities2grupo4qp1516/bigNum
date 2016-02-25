@@ -5,13 +5,13 @@ var xml = require('xml');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', function (req, res, next) {
+    res.render('index', {title: 'Express'});
 });
 
-router.get('/bignum', function(req, res, next){
+router.get('/bignum', function (req, res, next) {
     // Operaciones random usando bignum
-    var bigNumber = bignum('782910138827292261791972728324982').sub('182373273283402171237474774728373').div(8);
+    var bigNumber = bignum('78291013882729226179197272832498').sub('18237327328340217123747477472837').div(bignum.rand(10));
 
     // Conversion del bignumber a un string, este dentro de un buffer, algo asi como una conversion a binario
     var buffer = new Buffer(bigNumber.toString());
@@ -23,6 +23,19 @@ router.get('/bignum', function(req, res, next){
     res.set('Content-Type', 'text/xml');
 
     //se manda usando la libreria XML
+    res.send(xml({'bigNumberBase64': bigNumberBase64}));
+});
+
+router.post('/bignum', function (req, res, next) {
+    var bigNumberBase64 = req.body['bignumberbase64'];
+    var buffer = new Buffer(bigNumberBase64, 'base64').toString('ascii');
+    console.log(buffer);
+
+    var bigNumber = bignum(buffer).mul(2);
+    console.log(bigNumber);
+    buffer = new Buffer(bigNumber.toString());
+    bigNumberBase64 = buffer.toString('base64');
+    res.set('Content-Type', 'text/xml');
     res.send(xml({'bigNumberBase64': bigNumberBase64}));
 });
 
