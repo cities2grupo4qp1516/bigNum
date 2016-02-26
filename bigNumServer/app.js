@@ -21,7 +21,9 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(xmlparser());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -51,8 +53,8 @@ if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
-            message: err.message,
-            error: err
+            message: err.message
+            , error: err
         });
     });
 }
@@ -62,8 +64,8 @@ if (app.get('env') === 'development') {
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
-        message: err.message,
-        error: {}
+        message: err.message
+        , error: {}
     });
 });
 

@@ -4,7 +4,8 @@
 
 //PARA CODIFICAR/DECODIFICAR EN BASE64 *CROSS-PLATFORM*
 var Base64 = {
-    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) {
+    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+    , encode: function (e) {
         var t = "";
         var n, r, i, s, o, u, a;
         var f = 0;
@@ -25,7 +26,8 @@ var Base64 = {
             t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
         }
         return t
-    }, decode: function (e) {
+    }
+    , decode: function (e) {
         var t = "";
         var n, r, i;
         var s, o, u, a;
@@ -49,7 +51,8 @@ var Base64 = {
         }
         t = Base64._utf8_decode(t);
         return t
-    }, _utf8_encode: function (e) {
+    }
+    , _utf8_encode: function (e) {
         e = e.replace(/\r\n/g, "\n");
         var t = "";
         for (var n = 0; n < e.length; n++) {
@@ -66,7 +69,8 @@ var Base64 = {
             }
         }
         return t
-    }, _utf8_decode: function (e) {
+    }
+    , _utf8_decode: function (e) {
         var t = "";
         var n = 0;
         var r = c1 = c2 = 0;
