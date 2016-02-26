@@ -7,7 +7,6 @@ Author URI: http://themeforest.net/user/Bluminethemes
 Version: 1.4.1
 */
 
-
 /* ==================================================================
  * Table of Contents:
  *
@@ -42,7 +41,6 @@ Version: 1.4.1
  * 21.0 - Responsive
  * 22.0 - Image Backgrounds
 ================================================================== */
-
 
 /* ==================================================================
 	1.0 CSS Reset
@@ -178,7 +176,6 @@ table {
     border-spacing: 0;
 }
 
-
 /* ==================================================================
 	2.0 Bootstrap fix for WinPhone 8 and IE10 
 ================================================================== */
@@ -202,7 +199,6 @@ table {
 @viewport {
     width: device-width;
 }
-
 
 /* ==================================================================
 	3.0 Basic Document Styles
@@ -237,7 +233,6 @@ textarea {
     font-style: normal;
     font-weight: 300;
 }
-
 
 /* ==================================================================
 	4.0 Typography
@@ -339,7 +334,6 @@ strong {
 .color-white {
     color: #fff;
 }
-
 
 /* ==================================================================
 	5.0 Basic Layout Styles
@@ -498,7 +492,6 @@ section {
     position: relative;
 }
 
-
 /* ==================================================================
 	6.0 Forms
 ================================================================== */
@@ -605,7 +598,6 @@ input[placeholder] {
     text-overflow: ellipsis;
 }
 
-
 /* firefox 19+ */
 
 input:-moz-placeholder {
@@ -701,7 +693,6 @@ input:-moz-placeholder {
     color: #fff;
 }
 
-
 /* WebKit browsers */
 
 .contact-form input::-webkit-input-placeholder,
@@ -725,7 +716,6 @@ input:-moz-placeholder {
     /* Internet Explorer 10+ */
     color: #fff;
 }
-
 
 /* WebKit browsers */
 
@@ -771,7 +761,6 @@ textarea::-webkit-input-placeholder {
     float: left;
 }
 
-
 /* ==================================================================
 	7.0 Preloader
 ================================================================== */
@@ -798,7 +787,6 @@ textarea::-webkit-input-placeholder {
     margin: -60px 0 0 -64px;
 }
 
-
 /* ==================================================================
 	8.0 Section Styles
 ================================================================== */
@@ -815,7 +803,6 @@ textarea::-webkit-input-placeholder {
     z-index: 10;
     position: relative;
 }
-
 
 /* ==================================================================
 	9.0 Background Styles
@@ -863,7 +850,6 @@ textarea::-webkit-input-placeholder {
     -webkit-transform: translateZ(0);
 }
 
-
 /* ==================================================================
 	10.0 Header
 ================================================================== */
@@ -901,7 +887,6 @@ textarea::-webkit-input-placeholder {
 .site-logo img {
     display: block;
 }
-
 
 /* ==================================================================
 	11.0 Navigation
@@ -973,7 +958,6 @@ textarea::-webkit-input-placeholder {
     background-color: transparent;
 }
 
-
 /* ==================================================================
 	12.0 Clock
 ================================================================== */
@@ -1033,7 +1017,6 @@ textarea::-webkit-input-placeholder {
     top: 0px;
 }
 
-
 /*==================================================================
 	13.0 Services
 ================================================================== */
@@ -1070,7 +1053,6 @@ textarea::-webkit-input-placeholder {
     margin-bottom: 10px;
 }
 
-
 /*==================================================================
 	14.0 Footer
 ================================================================== */
@@ -1099,7 +1081,6 @@ textarea::-webkit-input-placeholder {
     line-height: 63px;
     margin: 0;
 }
-
 
 /*	14.1 Socials icons
 	-------------------------------------------------------------- */
@@ -1153,7 +1134,6 @@ textarea::-webkit-input-placeholder {
     color: #fff;
 }
 
-
 /* ==================================================================
 	15.0 Buttons
 ================================================================== */
@@ -1169,7 +1149,6 @@ textarea::-webkit-input-placeholder {
     outline-offset: 0px;
     text-decoration: none;
 }
-
 
 /*	15.1 Default Buttons
 	-------------------------------------------------------------- */
@@ -1208,7 +1187,6 @@ textarea::-webkit-input-placeholder {
     color: #333;
 }
 
-
 /*	15.2 Small Buttons
 	-------------------------------------------------------------- */
 
@@ -1246,7 +1224,6 @@ textarea::-webkit-input-placeholder {
     color: #333;
 }
 
-
 /*	15.3 Border Buttons
 	-------------------------------------------------------------- */
 
@@ -1273,19 +1250,16 @@ textarea::-webkit-input-placeholder {
     transition: all .3s ease-in-out;
 }
 
-.border-button:hover,
-.border-button:focus {
+.border-button:hover {
     background: #fff;
     color: #333;
     opacity: 0.8;
 }
 
 .border-button i,
-.border-button:hover i,
-.border-button:focus i {
+.border-button:hover i {
     color: #333;
 }
-
 
 /*	15.4 Small Border Buttons
 	-------------------------------------------------------------- */
@@ -1326,10 +1300,8 @@ textarea::-webkit-input-placeholder {
     color: #333;
 }
 
-
 /*	15.5 Buttons Styles
 	-------------------------------------------------------------- */
-
 
 /* Border Blue */
 
@@ -1354,7 +1326,6 @@ textarea::-webkit-input-placeholder {
     color: #fff;
 }
 
-
 /* Border Green */
 
 .border-bt-green {
@@ -1377,7 +1348,6 @@ textarea::-webkit-input-placeholder {
 .border-bt-green:focus i {
     color: #fff;
 }
-
 
 /* Border Turkus */
 
@@ -1402,7 +1372,6 @@ textarea::-webkit-input-placeholder {
     color: #fff;
 }
 
-
 /* Border Orange */
 
 .border-bt-orange {
@@ -1425,7 +1394,6 @@ textarea::-webkit-input-placeholder {
 .border-bt-orange:focus i {
     color: #fff;
 }
-
 
 /* Border Red */
 
@@ -1450,7 +1418,6 @@ textarea::-webkit-input-placeholder {
     color: #fff;
 }
 
-
 /* Border Grey */
 
 .border-bt-grey {
@@ -1474,7 +1441,6 @@ textarea::-webkit-input-placeholder {
     color: #333;
 }
 
-
 /* Blue */
 
 .bt-blue {
@@ -1493,7 +1459,6 @@ textarea::-webkit-input-placeholder {
 .bt-blue:focus i {
     color: #fff;
 }
-
 
 /* Green */
 
@@ -1514,7 +1479,6 @@ textarea::-webkit-input-placeholder {
     color: #fff;
 }
 
-
 /* Turkus */
 
 .bt-turkus {
@@ -1533,7 +1497,6 @@ textarea::-webkit-input-placeholder {
 .bt-turkus:focus i {
     color: #fff;
 }
-
 
 /* Orange */
 
@@ -1554,7 +1517,6 @@ textarea::-webkit-input-placeholder {
     color: #fff;
 }
 
-
 /* Red */
 
 .bt-red {
@@ -1573,7 +1535,6 @@ textarea::-webkit-input-placeholder {
 .bt-red:focus i {
     color: #fff;
 }
-
 
 /* Grey */
 
@@ -1594,7 +1555,6 @@ textarea::-webkit-input-placeholder {
     color: #333;
 }
 
-
 /* Transparent */
 
 .bt-transparent {
@@ -1614,7 +1574,6 @@ textarea::-webkit-input-placeholder {
     color: #fff;
 }
 
-
 /* Transparent Dark */
 
 .bt-transparent-dark {
@@ -1633,7 +1592,6 @@ textarea::-webkit-input-placeholder {
 .bt-transparent-dark:focus i {
     color: #333;
 }
-
 
 /* ==================================================================
 	16.0 Overlay Styles
@@ -1674,7 +1632,6 @@ textarea::-webkit-input-placeholder {
     right: 0;
 }
 
-
 /*	16.1 Background Color Styles
 	-------------------------------------------------------------- */
 
@@ -1699,14 +1656,13 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to bottom, #fcfcfc 0%, #f8fafa 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#f8fafa', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#f8fafa', GradientType=0);
     /* IE6-8 */
 }
 
 .background-blue-dark {
     background: #000a1e;
 }
-
 
 /*	16.2 Gradient Background Styles
 	-------------------------------------------------------------- */
@@ -1728,7 +1684,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to bottom, rgba(125, 167, 243, 1) 0%, rgba(77, 178, 197, 1) 50%, rgba(66, 238, 231, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#7da7f3', endColorstr='#42eee7', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7da7f3', endColorstr='#42eee7', GradientType=0);
     /* IE6-8 */
 }
 
@@ -1749,7 +1705,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, #fe7259 0%, #ffc456 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#fe7259', endColorstr='#ffc456', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe7259', endColorstr='#ffc456', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1770,7 +1726,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, #3cf888 0%, #23e260 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#3cf888', endColorstr='#23e260', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3cf888', endColorstr='#23e260', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1791,7 +1747,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, #73ecfd 0%, #6ecaf1 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#73ecfd', endColorstr='#6ecaf1', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#73ecfd', endColorstr='#6ecaf1', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1812,7 +1768,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, #a169ce 0%, #abcff3 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#a169ce', endColorstr='#abcff3', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a169ce', endColorstr='#abcff3', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1833,7 +1789,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(68, 209, 252, 1) 0%, rgba(68, 135, 252, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#44d1fc', endColorstr='#4487fc', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#44d1fc', endColorstr='#4487fc', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1854,7 +1810,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(229, 112, 231, 1) 0%, rgba(200, 94, 199, 1) 47%, rgba(168, 73, 163, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#e570e7', endColorstr='#a849a3', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e570e7', endColorstr='#a849a3', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1875,7 +1831,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(255, 93, 177, 1) 0%, rgba(239, 1, 124, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff5db1', endColorstr='#ef017c', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5db1', endColorstr='#ef017c', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1896,7 +1852,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(234, 185, 45, 1) 0%, rgba(199, 152, 16, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#eab92d', endColorstr='#c79810', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eab92d', endColorstr='#c79810', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1917,7 +1873,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(221, 232, 99, 1) 1%, rgba(255, 151, 25, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dde863', endColorstr='#ff9719', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dde863', endColorstr='#ff9719', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1938,7 +1894,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(83, 160, 118, 1) 0%, rgba(16, 165, 51, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#53a076', endColorstr='#10a533', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#53a076', endColorstr='#10a533', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1959,7 +1915,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(82, 158, 151, 1) 0%, rgba(21, 211, 205, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#529e97', endColorstr='#15d3cd', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#529e97', endColorstr='#15d3cd', GradientType=1);
     /* IE6-8 */
 }
 
@@ -1980,7 +1936,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(121, 202, 234, 1) 0%, rgba(21, 211, 205, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#79caea', endColorstr='#15d3cd', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#79caea', endColorstr='#15d3cd', GradientType=1);
     /* IE6-8 */
 }
 
@@ -2001,7 +1957,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(229, 165, 68, 1) 0%, rgba(70, 116, 191, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#e5a544', endColorstr='#4674bf', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e5a544', endColorstr='#4674bf', GradientType=1);
     /* IE6-8 */
 }
 
@@ -2022,7 +1978,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(206, 206, 206, 1) 0%, rgba(64, 185, 249, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#cecece', endColorstr='#40b9f9', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cecece', endColorstr='#40b9f9', GradientType=1);
     /* IE6-8 */
 }
 
@@ -2043,7 +1999,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(110, 204, 193, 1) 0%, rgba(64, 185, 249, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#6eccc1', endColorstr='#40b9f9', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6eccc1', endColorstr='#40b9f9', GradientType=1);
     /* IE6-8 */
 }
 
@@ -2064,7 +2020,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to bottom, rgba(67, 169, 216, 1) 0%, rgba(58, 166, 216, 1) 47%, rgba(38, 138, 187, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#43a9d8', endColorstr='#268abb', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#43a9d8', endColorstr='#268abb', GradientType=0);
     /* IE6-8 */
 }
 
@@ -2085,7 +2041,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, rgba(38, 143, 208, 1) 0%, rgba(95, 86, 172, 1) 100%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#268fd0', endColorstr='#5f56ac', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#268fd0', endColorstr='#5f56ac', GradientType=1);
     /* IE6-8 */
 }
 
@@ -2106,7 +2062,7 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, #2094dc 0%, #14bee3 99%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#2094dc', endColorstr='#14bee3', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2094dc', endColorstr='#14bee3', GradientType=1);
     /* IE6-8 */
 }
 
@@ -2127,10 +2083,9 @@ textarea::-webkit-input-placeholder {
     /* IE10+ */
     background: linear-gradient(to right, #26a6d0 0%, #665bc3 99%);
     /* W3C */
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#26a6d0', endColorstr='#665bc3', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#26a6d0', endColorstr='#665bc3', GradientType=1);
     /* IE6-8 */
 }
-
 
 /* ==================================================================
 	17.0 Shortcodes
@@ -2319,7 +2274,6 @@ textarea::-webkit-input-placeholder {
     color: #7DA7F3;
 }
 
-
 /* ==================================================================
 	18.0 Flexslider
 ================================================================== */
@@ -2360,7 +2314,6 @@ textarea::-webkit-input-placeholder {
     font-size: 40px;
     font-weight: 200;
 }
-
 
 /* ==================================================================
 	19.0 Full Page
@@ -2433,7 +2386,6 @@ div.viewport-border {
     margin-left: 0;
 }
 
-
 /* ==================================================================
 	20.0 Mobile
 ================================================================== */
@@ -2456,7 +2408,6 @@ body.mobile #video_background {
     display: none;
 }
 
-
 /* ==================================================================
 	21.0 Responsive
 ================================================================== */
@@ -2465,18 +2416,23 @@ body.mobile #video_background {
     h1 {
         font-size: 50px;
     }
+
     h2 {
         font-size: 44px;
     }
+
     h3 {
         font-size: 26px;
     }
+
     .services .service {
         padding-bottom: 50px;
     }
+
     .services .service:last-child {
         padding-bottom: 0px;
     }
+
     .countdown .counter-box {
         display: inline-block;
         float: none;
@@ -2493,20 +2449,25 @@ body.mobile #video_background {
         position: fixed;
         -webkit-transform: scale3d(1, 1, 1);
     }
+
     .navbar-nav {
         margin: 15px -15px;
         margin-bottom: 30px;
     }
+
     .navigation ul > li > a {
         border: 0;
         text-align: center;
     }
+
     .navigation ul > li > a:hover {
         background: rgba(255, 255, 255, 0.07);
     }
+
     .navigation ul > li.active > a {
         border-bottom: 0px solid #fff;
     }
+
     .socials-icons {
         position: relative;
         margin: 0;
@@ -2519,16 +2480,19 @@ body.mobile #video_background {
         right: 0;
         background: #fff;
     }
+
     .socials-icons ul {
         margin: 15px auto;
         display: table;
         overflow: hidden;
     }
+
     .socials-icons li {
         margin: 0;
         display: block;
         float: left;
     }
+
     .socials-icons li a {
         display: block;
         width: 80px;
@@ -2536,46 +2500,58 @@ body.mobile #video_background {
         line-height: 80px;
         border: 0px;
     }
+
     .socials-icons li a i {
         color: #333;
         line-height: 80px;
         font-size: 21px;
     }
+
     .socials-icons li a:hover {
         border: 0px;
     }
+
     .textslider h1 {
         font-size: 62px;
     }
+
     .textslider h2 {
         font-size: 48px;
     }
+
     .textslider h3 {
         font-size: 30px;
     }
+
     .viewport-border div {
         display: none;
     }
+
     .fp-responsive .section {
         padding-top: 130px;
         padding-bottom: 130px;
         height: auto;
     }
+
     .fp-responsive .section:last-child {
         padding-bottom: 230px !important;
     }
+
     .fp-responsive .section .container {
         padding-left: 15px;
         padding-right: 15px;
     }
+
     .subscription-form input,
     .subscription-form button {
         margin: 0px auto;
         float: none;
     }
+
     .subscription-form button {
         margin-top: 10px;
     }
+
     .site-footer {
         background: transparent;
         position: relative;
@@ -2596,15 +2572,19 @@ body.mobile #video_background {
     .textslider h1 {
         font-size: 48px;
     }
+
     .textslider h2 {
         font-size: 30px;
     }
+
     .textslider h3 {
         font-size: 24px;
     }
+
     .fp-responsive .section:last-child {
         padding-bottom: 600px !important;
     }
+
     .socials-icons ul {
         margin: 0 auto;
         text-align: center;
@@ -2612,17 +2592,18 @@ body.mobile #video_background {
         vertical-align: middle;
         overflow: hidden;
     }
+
     .socials-icons li {
         margin: 0px 10px;
         display: inline-block;
         float: none;
     }
+
     .navbar-brand img {
         height: 60px;
         width: auto;
     }
 }
-
 
 /* ==================================================================
 	22.0 Image Backgrounds
