@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/bignum', function (req, res, next) {
     // Operaciones random usando bignum
-    var bigNumber = bignum('78291013882729226179197272832498').sub('18237327328340217123747477472837').div(bignum.rand(10));
+    var bigNumber = bignum('78291013882729226179197272832498').sub('18237327328340217123747477472837').div(bignum.rand(10).add(1));
 
     // Conversion del bignumber a un string, este dentro de un buffer, algo asi como una conversion a binario
     var buffer = new Buffer(bigNumber.toString());
