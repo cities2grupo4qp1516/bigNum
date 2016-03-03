@@ -162,8 +162,7 @@
             $('#main-nav a').on('click', function () {
                 $('.navbar-toggle').trigger('click');
             });
-        }
-        ;
+        };
 
 
         /* BACKGROUNDS */
@@ -178,7 +177,10 @@
                     "demo/background/image-1.jpg",
                     "demo/background/image-2.jpg",
                     "demo/background/image-3.jpg"
-                ], {duration: 3000, fade: 1200});
+                ], {
+                    duration: 3000,
+                    fade: 1200
+                });
 
             } else if ($('body').hasClass('youtube-background')) { // YOUTUBE VIDEO BACKGROUND
                 if ($('body').hasClass('mobile')) {
@@ -310,7 +312,9 @@
                 url: 'subscribe.php',
                 type: 'POST',
                 dataType: 'json',
-                data: {'email': email},
+                data: {
+                    'email': email
+                },
 
                 success: function (data) {
                     if (data.error) {
