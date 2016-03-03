@@ -1,6 +1,17 @@
 var express = require('express');
 var bignum = require('bignum');
 var xml = require('xml');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var xhrTTP = new XMLHttpRequest();
+
+xhrTTP.onload = function () {
+    console.log("5.- Ya he recibido el mensaje de A: ");
+    console.log(xhrTTP.responseText);
+};
+xhrTTP.onerror = function () {
+    console.log("Error");
+};
 
 var router = express.Router();
 
@@ -39,4 +50,24 @@ router.post('/bignum', function (req, res, next) {
     res.send(xml({'bigNumberBase64': bigNumberBase64}));
 });
 
+router.post('/TTPtoB', function (req, res, next) {
+    console.log("3.- Yo soy B, y el TTP me dice algo de A: ")
+    console.log(req.body);
+
+    console.log("Voy a ver que quiere A");
+    var msjToTTL = {
+        L: "L",
+        Pr: "Pr"
+    };
+    xhrTTP.open("POST", "http://localhost:4000/BtoTTP");
+    xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhrTTP.send(JSON.stringify(msjToTTL));
+    res.send("OK");
+
+});
+
+router.post('/fromAtoB', function (req, res, next) {
+    console.log(req.body);
+    res.send("ok");
+});
 module.exports = router;

@@ -6,7 +6,8 @@ var bigNumApp = angular.module('bigNumApp', []);
 
 //PARA CODIFICAR/DECODIFICAR EN BASE64 *CROSS-PLATFORM*
 var Base64 = {
-    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) {
+    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+    encode: function (e) {
         var t = "";
         var n, r, i, s, o, u, a;
         var f = 0;
@@ -27,7 +28,8 @@ var Base64 = {
             t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
         }
         return t
-    }, decode: function (e) {
+    },
+    decode: function (e) {
         var t = "";
         var n, r, i;
         var s, o, u, a;
@@ -51,7 +53,8 @@ var Base64 = {
         }
         t = Base64._utf8_decode(t);
         return t
-    }, _utf8_encode: function (e) {
+    },
+    _utf8_encode: function (e) {
         e = e.replace(/\r\n/g, "\n");
         var t = "";
         for (var n = 0; n < e.length; n++) {
@@ -68,7 +71,8 @@ var Base64 = {
             }
         }
         return t
-    }, _utf8_decode: function (e) {
+    },
+    _utf8_decode: function (e) {
         var t = "";
         var n = 0;
         var r = c1 = c2 = 0;
@@ -94,14 +98,15 @@ var Base64 = {
 
 bigNumApp.controller('BignumController', ['$scope', function ($scope) {
 
-//Url base
+    //Url base
     var URL = "http://localhost:3000/";
+    var URLTTP = "http://localhost:4000/";
     var bigNumber;
 
-//Peticion ajax XML
+    //Peticion ajax XML
     var xhr = new XMLHttpRequest();
 
-//procesado de la respuesta
+    //procesado de la respuesta
     xhr.onload = function () {
 
         //parseo el xml, child 0 porque solo hay uno, nuestro numero
@@ -110,7 +115,9 @@ bigNumApp.controller('BignumController', ['$scope', function ($scope) {
         //decodificamos y obtenemos un string con nuestro bignum
         var bigNumberStr = Base64.decode(bigNumberBase64);
 
-        BigNumber.config({DECIMAL_PLACES: 10});
+        BigNumber.config({
+            DECIMAL_PLACES: 10
+        });
         //lo volvemos a convertir en bignum
         bigNumber = new BigNumber(bigNumberStr);
 
@@ -148,6 +155,32 @@ bigNumApp.controller('BignumController', ['$scope', function ($scope) {
         xhr.open("GET", URL + "bignum");
         xhr.responseType = "document";
         xhr.send();
+    }
+
+
+    //xhr nuevo para la practica 2
+    var xhrTTP = new XMLHttpRequest();
+
+    xhrTTP.onload = function () {
+        console.log("2.- El TTP me contesta a mi peticion: ");
+        console.log(xhrTTP.response);
+    }
+    xhrTTP.onerror = function () {
+        console.log("Error");
+    }
+
+    $scope.sendTTP = function () {
+        var msjToTTP = {
+            TTP: "TTP",
+            B: "B",
+            M: "M",
+            p0: "p0"
+        };
+        console.log("1.- Soy A y mando esto al TTP: ");
+        console.log(msjToTTP);
+        xhrTTP.open("POST", URLTTP + "AtoB");
+        xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhrTTP.send(JSON.stringify(msjToTTP));
     }
 
 }]);
