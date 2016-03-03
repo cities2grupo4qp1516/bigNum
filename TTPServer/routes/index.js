@@ -35,7 +35,7 @@ router.post('/AtoB', function (req, res, next) {
     var message = new messages({
         from: "A"
         , to: "B"
-        , leido: "false"
+        , leido: false
     });
 
     message.save(
@@ -59,7 +59,7 @@ router.get('/AconfirmB', function (req, res) {
 
     messages.findOne({
         'from': "A"
-        , 'leido': "false"
+        , 'leido': false
     }, function (err, message) {
         if (err)
             res.sendStatus(500);
@@ -76,8 +76,9 @@ router.get('/AconfirmB', function (req, res) {
             }));
             messages.findOneAndUpdate({
                     'from': "A"
+                    , 'leido': false
                 }, {
-                    leido: "true"
+                    leido: true
                 }, {
                     upsert: false
                 }

@@ -164,6 +164,15 @@ bigNumApp.controller('BignumController', ['$scope', function ($scope) {
     xhrTTP.onload = function () {
         console.log("2.- El TTP me contesta a mi peticion: ");
         console.log(xhrTTP.response);
+
+        var respuesta = JSON.parse(xhrTTP.response);
+        if (respuesta.Ps != "Ps") {
+            console.log(respuesta.K);
+            if (respuesta.K == undefined)
+                alert("B aun no ha leido el mensaje");
+            else
+                alert("B ya ha leido el mensaje");
+        }
     }
     xhrTTP.onerror = function () {
         console.log("Error");

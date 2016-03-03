@@ -9,7 +9,7 @@ var messages = new Schema({
         type: String
     }
     , leido: {
-        type: String
+        type: Boolean
     }
 });
 
