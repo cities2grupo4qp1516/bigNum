@@ -2,6 +2,7 @@ var express = require('express');
 var bignum = require('bignum');
 var xml = require('xml');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var rsa = require('../rsa/rsa-bignum');
 
 var xhrTTP = new XMLHttpRequest();
 
@@ -54,11 +55,16 @@ router.post('/TTPtoB', function (req, res, next) {
     console.log("3.- Yo soy B, y el TTP me dice algo de A: ")
     console.log(req.body);
 
-    console.log("Voy a ver que quiere A");
-    var msjToTTL = {
+      var msjToTTL = {
         L: "L",
         Pr: "Pr"
     };
+
+    var keys_B = rsa.generateKeys(1024);
+    var Pr = bignum.fromBuffer(new Buffer("TTP" + ","+ req.body.A + ","+ req.body.L + "," + req.body.Po));
+    Pr = keys_B.privateKey.encrypt(Pr);
+    msjToTTL.Pr = Pr.toBuffer().toString('base64');
+
     xhrTTP.open("POST", "http://localhost:4000/BtoTTP");
     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhrTTP.send(JSON.stringify(msjToTTL));
