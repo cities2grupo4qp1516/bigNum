@@ -100,7 +100,7 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', func
         var URL = "http://localhost:3000/";
         var URLTTP = "http://localhost:4000/";
         var bigNumber;
-        var keys = rsaKey.generateKeys(512);
+        var keys = rsaKey.generateKeys(1024);
 
         var xhr = new XMLHttpRequest();
 
@@ -186,7 +186,7 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', func
                 TTP: "TTP"
                 , B: "B"
                 , M: mensaje
-                , Po: P0
+                , Po: Base64.encode(P0)
             };
             console.log("1.- Soy A y mando esto al TTP: ");
             console.log(msjToTTP);
