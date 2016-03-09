@@ -55,9 +55,9 @@ router.post('/AtoB', function (req, res, next) {
   var msjToB = {
       A: "A"
       , L: "L"
-      , Po: Po
+      , Po: ""
   };
-  
+  msjToB.Po = Po;
 
     xhrTTP.open("POST", "http://localhost:3000/TTPtoB");
     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
