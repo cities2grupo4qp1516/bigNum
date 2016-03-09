@@ -178,10 +178,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', func
             var msjToEncrypt = "TTP,B," + hashMensaje;
             var bytes = new BigInteger(rsaKey.String2bin(msjToEncrypt));
 
-            var P0 = keys.publicKey.encrypt(bytes);
-            var d = keys.privateKey.decrypt(P0);
+            var P0 = keys.privateKey.encrypt(bytes);
 
-            var l = d.toByteArray();
             var msjToTTP = {
                 TTP: "TTP"
                 , B: "B"
