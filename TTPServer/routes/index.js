@@ -9,7 +9,7 @@ var bignum = require('bignum');
 var xhrTTP = new XMLHttpRequest();
 var Pr;
 var keys_TTP = rsa.generateKeys(1024);
-var m = "Hola soy Torbe";
+var m;
 
 xhrTTP.onload = function () {
     console.log(xhrTTP.responseText);
@@ -20,8 +20,10 @@ xhrTTP.onerror = function () {
 
 router.post('/AtoB', function (req, res, next) {
     console.log(req.body);
+    m = req.body.M;
+    Po = req.body.Po;
 
-
+/*
     var AtoTTP = {
         TTP: "TTP",
         B: "B",
@@ -32,7 +34,7 @@ router.post('/AtoB', function (req, res, next) {
       var keys_A = rsa.generateKeys(1024);
       var Po = bignum.fromBuffer(new Buffer(AtoTTP.TTP + ","+ AtoTTP.B + ","+ crypto.createHash("sha256").update(AtoTTP.M).digest("hex")));
       Po = keys_A.privateKey.encrypt(Po);
-      AtoTTP.Po = Po.toBuffer().toString('base64');
+      AtoTTP.Po = Po.toBuffer().toString('base64');*/
 
 
 
@@ -44,18 +46,18 @@ router.post('/AtoB', function (req, res, next) {
       , Ps: "Ps"
   };
 
-  var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + ","+ MsjToA.B  + ","+ MsjToA.Tr + ","+ MsjToA.L + ","+ AtoTTP.Po));
+  var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + ","+ MsjToA.B  + ","+ MsjToA.Tr + ","+ MsjToA.L + ","+ Po));
   Ps = keys_TTP.privateKey.encrypt(Ps);
   MsjToA.Ps = Ps.toBuffer().toString('base64');
 
-  res.send(MsjToA);
+
 
   var msjToB = {
       A: "A"
       , L: "L"
-      , Po: ""
+      , Po: Po
   };
-  msjToB.Po = Po.toBuffer().toString('base64');
+  
 
     xhrTTP.open("POST", "http://localhost:3000/TTPtoB");
     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -73,6 +75,11 @@ router.post('/AtoB', function (req, res, next) {
             console.log("Error = " + err);
         }
     );
+
+
+    res.send(MsjToA);
+
+
 });
 
 router.post('/BtoTTP', function (req, res, next) {
