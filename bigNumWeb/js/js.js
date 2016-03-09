@@ -186,7 +186,7 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', func
                 TTP: "TTP"
                 , B: "B"
                 , M: mensaje
-                , Po: Base64.encode(P0)
+                , Po: Base64.encode(P0.toString())
             };
             console.log("1.- Soy A y mando esto al TTP: ");
             console.log(msjToTTP);
