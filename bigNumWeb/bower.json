@@ -25,6 +25,9 @@
     "respond": "^1.4.2",
     "bootstrap": "^3.3.6",
     "XMLWriter": "^1.0.2",
-    "angular-rt-popup": "^1.0.6"
+    "angular-rt-popup": "^1.0.6",
+    "angular-jsbn-big-integer": "^0.0.2",
+    "decimal.js": "^5.0.7",
+    "js-sha256": "^0.3.0"
   }
 }

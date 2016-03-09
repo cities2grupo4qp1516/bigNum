@@ -2,7 +2,7 @@
  * Created by BestTeamEver on 21/02/2016.
  */
 
-var bigNumApp = angular.module('bigNumApp', []);
+var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger']);
 
 //PARA CODIFICAR/DECODIFICAR EN BASE64 *CROSS-PLATFORM*
 var Base64 = {
@@ -96,105 +96,204 @@ var Base64 = {
     }
 }
 
-bigNumApp.controller('BignumController', ['$scope', function ($scope) {
+bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', function ($scope, BigInteger, rsaKey) {
+        var URL = "http://localhost:3000/";
+        var URLTTP = "http://localhost:4000/";
+        var bigNumber;
+        var keys = rsaKey.generateKeys(512);
 
-    //Url base
-    var URL = "http://localhost:3000/";
-    var URLTTP = "http://localhost:4000/";
-    var bigNumber;
+        var xhr = new XMLHttpRequest();
 
-    //Peticion ajax XML
-    var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
 
-    //procesado de la respuesta
-    xhr.onload = function () {
+            //parseo el xml, child 0 porque solo hay uno, nuestro numero
+            var bigNumberBase64 = xhr.responseXML.documentElement.childNodes[0].nodeValue;
 
-        //parseo el xml, child 0 porque solo hay uno, nuestro numero
-        var bigNumberBase64 = xhr.responseXML.documentElement.childNodes[0].nodeValue;
+            //decodificamos y obtenemos un string con nuestro bignum
+            var bigNumberStr = Base64.decode(bigNumberBase64);
 
-        //decodificamos y obtenemos un string con nuestro bignum
-        var bigNumberStr = Base64.decode(bigNumberBase64);
-
-        BigNumber.config({
-            DECIMAL_PLACES: 10
-        });
-        //lo volvemos a convertir en bignum
-        bigNumber = new BigNumber(bigNumberStr);
-
-        //para que pase algo printaremos el numero en pantalla
-        setTimeout(function () {
-            $scope.$apply(function () {
-                $scope.bignum = bigNumber;
-
+            BigNumber.config({
+                DECIMAL_PLACES: 10
             });
-        }, 1000);
+            //lo volvemos a convertir en bignum
+            bigNumber = new BigNumber(bigNumberStr);
 
-        //console.log($scope.bignum);
-        //$("body").html("Este es el numero que he recuperado para ti: " + bigNumber + "<br> Y este si lo multiplicamos por dos: " + bigNumber.dividedBy(0.5));
+            //para que pase algo printaremos el numero en pantalla
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.bignum = bigNumber;
 
-    }
-    xhr.onerror = function () {
-        console.log("Error obteniendo el XML.");
-    }
-    xhr.open("GET", URL + "bignum");
-    xhr.responseType = "document";
-    xhr.send();
+                });
+            }, 1000);
 
-    $scope.double = function () {
-        var enviar = Base64.encode(bigNumber.toString());
-        var xw = new XMLWriter('UTF-8');
-        xw.writeStartDocument();
-        xw.writeElementString('bigNumberBase64', enviar);
-        xw.writeEndDocument();
-        xhr.open("POST", URL + "bignum", true);
-        xhr.setRequestHeader("Content-type", "text/xml");
-        xhr.send(xw.flush());
-    };
+            //console.log($scope.bignum);
+            //$("body").html("Este es el numero que he recuperado para ti: " + bigNumber + "<br> Y este si lo multiplicamos por dos: " + bigNumber.dividedBy(0.5));
 
-    $scope.random = function () {
+        }
+        xhr.onerror = function () {
+            console.log("Error obteniendo el XML.");
+        }
         xhr.open("GET", URL + "bignum");
         xhr.responseType = "document";
         xhr.send();
-    }
 
-
-    //xhr nuevo para la practica 2
-    var xhrTTP = new XMLHttpRequest();
-
-    xhrTTP.onload = function () {
-        console.log("2.- El TTP me contesta a mi peticion: ");
-        console.log(xhrTTP.response);
-
-        var respuesta = JSON.parse(xhrTTP.response);
-        if (respuesta.Ps != "Ps") {
-            console.log(respuesta.K);
-            if (respuesta.K == undefined)
-                alert("B aun no ha leido el mensaje");
-            else
-                alert("B ya ha leido el mensaje");
-        }
-    }
-    xhrTTP.onerror = function () {
-        console.log("Error");
-    }
-
-    $scope.sendTTP = function () {
-        var msjToTTP = {
-            TTP: "TTP"
-            , B: "B"
-            , M: "M"
-            , p0: "p0"
+        $scope.double = function () {
+            var enviar = Base64.encode(bigNumber.toString());
+            var xw = new XMLWriter('UTF-8');
+            xw.writeStartDocument();
+            xw.writeElementString('bigNumberBase64', enviar);
+            xw.writeEndDocument();
+            xhr.open("POST", URL + "bignum", true);
+            xhr.setRequestHeader("Content-type", "text/xml");
+            xhr.send(xw.flush());
         };
-        console.log("1.- Soy A y mando esto al TTP: ");
-        console.log(msjToTTP);
-        xhrTTP.open("POST", URLTTP + "AtoB");
-        xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhrTTP.send(JSON.stringify(msjToTTP));
-    }
+        $scope.random = function () {
+            xhr.open("GET", URL + "bignum");
+            xhr.responseType = "document";
+            xhr.send();
+        }
 
-    $scope.confirmTTP = function () {
-        xhrTTP.open("GET", URLTTP + "AconfirmB");
-        xhrTTP.send();
-    }
+        var xhrTTP = new XMLHttpRequest();
+        xhrTTP.onload = function () {
+            console.log("2.- El TTP me contesta a mi peticion: ");
+            console.log(xhrTTP.response);
 
-}]);
+            var respuesta = JSON.parse(xhrTTP.response);
+            if (respuesta.Ps != "Ps") {
+                console.log(respuesta.K);
+                if (respuesta.K == undefined)
+                    alert("B aun no ha leido el mensaje");
+                else
+                    alert("B ya ha leido el mensaje");
+            }
+        }
+        xhrTTP.onerror = function () {
+            console.log("Error");
+        }
+
+        $scope.sendTTP = function () {
+            var mensaje = "Hola soy Torbe";
+            var hashMensaje = sha256(mensaje);
+
+            var msjToEncrypt = "TTP,B," + hashMensaje;
+            var bytes = new BigInteger(rsaKey.String2bin(msjToEncrypt));
+
+            var P0 = keys.publicKey.encrypt(bytes);
+            var d = keys.privateKey.decrypt(P0);
+
+            var l = d.toByteArray();
+            var msjToTTP = {
+                TTP: "TTP"
+                , B: "B"
+                , M: mensaje
+                , Po: P0
+            };
+            console.log("1.- Soy A y mando esto al TTP: ");
+            console.log(msjToTTP);
+            xhrTTP.open("POST", URLTTP + "AtoB");
+            xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhrTTP.send(JSON.stringify(msjToTTP));
+        }
+        $scope.confirmTTP = function () {
+            xhrTTP.open("GET", URLTTP + "AconfirmB");
+            xhrTTP.send();
+        }
+
+
+    }])
+    .factory('rsaKey', ['BigInteger', 'primeNumber', function (BigInteger, primeNumber) {
+        var rsa = {
+                publicKey: function (bits, n, e) {
+                    this.bits = bits;
+                    this.n = n;
+                    this.e = e;
+                },
+                privateKey: function (p, q, d, publicKey) {
+                    this.p = p;
+                    this.q = q;
+                    this.d = d;
+                    this.publicKey = publicKey;
+                },
+                generateKeys: function (bitlength) {
+                    var p, q, n, phi, e, d, keys = {}, one = new BigInteger('1');
+                    this.bitlength = bitlength || 2048;
+                    console.log("Generating RSA keys of", this.bitlength, "bits");
+                    p = primeNumber.aleatorio(bitlength);
+                    do {
+                        q = primeNumber.aleatorio(bitlength);
+                    } while (q.compareTo(p) === 0);
+                    n = p.multiply(q);
+
+                    phi = p.subtract(one).multiply(q.subtract(one));
+
+                    e = new BigInteger('65537');
+                    d = e.modInverse(phi);
+
+                    keys.publicKey = new rsa.publicKey(this.bitlength, n, e);
+                    keys.privateKey = new rsa.privateKey(p, q, d, keys.publicKey);
+                    return keys;
+                },
+                String2bin: function (str) {
+                    var bytes = [];
+                    for (var i = 0; i < str.length; ++i) {
+                        bytes.push(str.charCodeAt(i));
+                    }
+                    return bytes;
+                },
+                bin2String: function (array) {
+                    var result = "";
+                    for (var i = 0; i < array.length; i++) {
+                        result += String.fromCharCode(array[i]);
+                    }
+                    return result;
+                }
+            }
+            ;
+
+
+        rsa.publicKey.prototype = {
+            encrypt: function (m) {
+                return m.modPow(this.e, this.n);
+            },
+            decrypt: function (c) {
+                return c.modPow(this.e, this.n);
+            }
+        };
+
+        rsa.privateKey.prototype = {
+            encrypt: function (m) {
+                return m.modPow(this.d, this.publicKey.n);
+            },
+            decrypt: function (c) {
+                return c.modPow(this.d, this.publicKey.n);
+            }
+        };
+
+        return rsa;
+    }])
+    .factory('primeNumber', ['BigInteger', function (BigInteger) {
+        Decimal.config({
+            precision: 300,
+            rounding: 4,
+            toExpNeg: -7,
+            toExpPos: 100,
+            maxE: 9e15,
+            minE: -9e15
+        });
+        var primo = {
+            aleatorio: function (bitLength) {
+                var isPrime = false;
+                var diff = Decimal.sub(Decimal.pow(2, bitLength), Decimal.pow(2, bitLength - 1));
+                while (!isPrime) {
+                    var randomNumber = Decimal.add((Decimal.mul(Decimal.random(300), Decimal.pow(2, bitLength)).round()), diff);
+                    //var randomNumberBetween = Decimal.add(randomAlto, diff);
+                    var rnd = new BigInteger(randomNumber.toString());
+                    if (rnd.isProbablePrime(3)) {
+                        isPrime = true;
+                    }
+                }
+                return rnd;
+            }
+        };
+        return primo;
+    }]);
