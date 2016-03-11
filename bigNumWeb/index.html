@@ -21,6 +21,8 @@
     <script src="bower_components/angular-jsbn-big-integer/big-integer.js"></script>
     <script src="bower_components/decimal.js/decimal.min.js"></script>
     <script src="bower_components/js-sha256/build/sha256.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
     <script src="js/modernizr.js"></script>
     <meta charset="UTF-8">
 
@@ -78,6 +80,17 @@
                                 data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
                                 ng-click="confirmTTP()">Confirmar recepción
                         </button>
+                        <br>
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="createKeys()">Crear y descargar claves
+                        </button>
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="loadKeys()">Cargar claves
+                        </button>
+                        <input style="display: none;" type="file" id="files" name="files[]" accept=".RSA"/>
+                        <br>
                     </div>
                 </div>
             </div>

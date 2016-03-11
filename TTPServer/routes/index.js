@@ -1,5 +1,6 @@
 var express = require('express');
 var messages = require('../models/messages.js');
+var publicKeys = require('../models/publicKeys.js');
 var router = express.Router();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var rsa = require('../rsa/rsa-bignum');
@@ -18,46 +19,66 @@ xhrTTP.onerror = function () {
     console.log("Error");
 };
 
+router.post('/sendKey', function (req, res) {
+    publicKeys.findOneAndUpdate({
+            user: req.body.user
+        }, {
+            user: req.body.user,
+            e: req.body.e,
+            n: req.body.n
+        }, {
+            upsert: true
+        }, function (err) {
+            console.log(err);
+        }
+    );
+    res.send(200);
+});
+router.get('/getKey/:user', function (req, res) {
+    publicKeys.findOne({
+        'user': req.params.user
+    }, function (err, message) {
+        res.send(message);
+    });
+});
 router.post('/AtoB', function (req, res, next) {
     console.log(req.body);
     m = req.body.M;
     Po = req.body.Po;
 
-/*
-    var AtoTTP = {
-        TTP: "TTP",
-        B: "B",
-        M: m,
-        Po: ""
-    };
+    /*
+     var AtoTTP = {
+     TTP: "TTP",
+     B: "B",
+     M: m,
+     Po: ""
+     };
 
-      var keys_A = rsa.generateKeys(1024);
-      var Po = bignum.fromBuffer(new Buffer(AtoTTP.TTP + ","+ AtoTTP.B + ","+ crypto.createHash("sha256").update(AtoTTP.M).digest("hex")));
-      Po = keys_A.privateKey.encrypt(Po);
-      AtoTTP.Po = Po.toBuffer().toString('base64');*/
-
+     var keys_A = rsa.generateKeys(1024);
+     var Po = bignum.fromBuffer(new Buffer(AtoTTP.TTP + ","+ AtoTTP.B + ","+ crypto.createHash("sha256").update(AtoTTP.M).digest("hex")));
+     Po = keys_A.privateKey.encrypt(Po);
+     AtoTTP.Po = Po.toBuffer().toString('base64');*/
 
 
     var MsjToA = {
         A: "A"
-      , B: "B"
-      , Tr: Date.now()
-      , L: "L"
-      , Ps: "Ps"
-  };
+        , B: "B"
+        , Tr: Date.now()
+        , L: "L"
+        , Ps: "Ps"
+    };
 
-  var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + ","+ MsjToA.B  + ","+ MsjToA.Tr + ","+ MsjToA.L + ","+ Po));
-  Ps = keys_TTP.privateKey.encrypt(Ps);
-  MsjToA.Ps = Ps.toBuffer().toString('base64');
+    var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + "," + MsjToA.B + "," + MsjToA.Tr + "," + MsjToA.L + "," + Po));
+    Ps = keys_TTP.privateKey.encrypt(Ps);
+    MsjToA.Ps = Ps.toBuffer().toString('base64');
 
 
-
-  var msjToB = {
-      A: "A"
-      , L: "L"
-      , Po: ""
-  };
-  msjToB.Po = Po;
+    var msjToB = {
+        A: "A"
+        , L: "L"
+        , Po: ""
+    };
+    msjToB.Po = Po;
 
     xhrTTP.open("POST", "http://localhost:3000/TTPtoB");
     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -98,9 +119,9 @@ router.post('/BtoTTP', function (req, res, next) {
 
 router.get('/AconfirmB', function (req, res) {
 
-  var Pd = bignum.fromBuffer(new Buffer("A" + ","+ "B" + ","+ Date.now() + ","+ "L"+ ","+ Pr));
-  Pd = keys_TTP.privateKey.encrypt(Pd);
-  var pd = Pd.toBuffer().toString('base64');
+    var Pd = bignum.fromBuffer(new Buffer("A" + "," + "B" + "," + Date.now() + "," + "L" + "," + Pr));
+    Pd = keys_TTP.privateKey.encrypt(Pd);
+    var pd = Pd.toBuffer().toString('base64');
 
 
     messages.findOne({
@@ -109,8 +130,7 @@ router.get('/AconfirmB', function (req, res) {
     }, function (err, message) {
         if (err)
             res.sendStatus(500);
-        else
-        if (message) {
+        else if (message) {
             res.send(JSON.stringify({
                 A: "A"
                 , B: "B"
@@ -128,7 +148,8 @@ router.get('/AconfirmB', function (req, res) {
                 }, {
                     upsert: false
                 }
-                , function (err, data) {});
+                , function (err, data) {
+                });
         } else
             res.sendStatus(404);
     });

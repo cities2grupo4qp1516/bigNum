@@ -55,13 +55,13 @@ router.post('/TTPtoB', function (req, res, next) {
     console.log("3.- Yo soy B, y el TTP me dice algo de A: ")
     console.log(req.body);
 
-      var msjToTTL = {
+    var msjToTTL = {
         L: "L",
         Pr: "Pr"
     };
 
     var keys_B = rsa.generateKeys(1024);
-    var Pr = bignum.fromBuffer(new Buffer("TTP" + ","+ req.body.A + ","+ req.body.L + "," + req.body.Po));
+    var Pr = bignum.fromBuffer(new Buffer("TTP" + "," + req.body.A + "," + req.body.L + "," + req.body.Po));
     Pr = keys_B.privateKey.encrypt(Pr);
     msjToTTL.Pr = Pr.toBuffer().toString('base64');
 
@@ -75,6 +75,7 @@ router.post('/TTPtoB', function (req, res, next) {
 });
 
 router.post('/fromAtoB', function (req, res, next) {
+    console.log("ab");
     console.log(req.body);
     res.send("ok");
 });
