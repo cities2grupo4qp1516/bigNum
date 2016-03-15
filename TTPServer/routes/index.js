@@ -7,17 +7,10 @@ var rsa = require('../rsa/rsa-bignum');
 var crypto = require('crypto');
 var bignum = require('bignum');
 
-var xhrTTP = new XMLHttpRequest();
 var Pr;
 var keys_TTP = rsa.generateKeys(1024);
 var m;
 
-xhrTTP.onload = function () {
-    console.log(xhrTTP.responseText);
-};
-xhrTTP.onerror = function () {
-    console.log("Error");
-};
 
 router.post('/sendKey', function (req, res) {
     publicKeys.findOneAndUpdate({
@@ -46,19 +39,6 @@ router.post('/AtoB', function (req, res, next) {
     m = req.body.M;
     Po = req.body.Po;
 
-    /*
-     var AtoTTP = {
-     TTP: "TTP",
-     B: "B",
-     M: m,
-     Po: ""
-     };
-
-     var keys_A = rsa.generateKeys(1024);
-     var Po = bignum.fromBuffer(new Buffer(AtoTTP.TTP + ","+ AtoTTP.B + ","+ crypto.createHash("sha256").update(AtoTTP.M).digest("hex")));
-     Po = keys_A.privateKey.encrypt(Po);
-     AtoTTP.Po = Po.toBuffer().toString('base64');*/
-
 
     var MsjToA = {
         A: "A"
@@ -76,10 +56,12 @@ router.post('/AtoB', function (req, res, next) {
     var msjToB = {
         A: "A"
         , L: "L"
-        , Po: ""
+        , Po: Po
     };
-    msjToB.Po = Po;
-    console.log(msjToB);
+    //msjToB.Po = Po;
+    console.log(JSON.stringify(msjToB));
+    var xhrTTP = new XMLHttpRequest();
+
     xhrTTP.open("POST", "http://localhost:3000/TTPtoB");
     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhrTTP.send(JSON.stringify(msjToB));
@@ -89,6 +71,12 @@ router.post('/AtoB', function (req, res, next) {
         , to: "B"
         , leido: false
     });
+    xhrTTP.onload = function () {
+        console.log(xhrTTP.responseText);
+    };
+    xhrTTP.onerror = function () {
+        console.log("Error");
+    };
 
 
     message.save(
