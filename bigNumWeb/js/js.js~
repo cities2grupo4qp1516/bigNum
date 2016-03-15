@@ -22,7 +22,7 @@
                 sock.send(mensaje);
             };
             sock.onmessage = function (e) {
-                console.log(e.data);
+                messages.push(e.data);
             };
             sock.onopen = function () {
                 var mensaje = {};

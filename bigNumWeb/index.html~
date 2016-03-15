@@ -23,7 +23,6 @@
     <script src="bower_components/js-sha256/build/sha256.min.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
-    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
     <script src="js/modernizr.js"></script>
     <meta charset="UTF-8">
 

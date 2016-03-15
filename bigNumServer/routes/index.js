@@ -4,6 +4,7 @@ var xml = require('xml');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var rsa = require('../rsa/rsa-bignum');
 var crypto = require('crypto');
+var sockjs = require('sockjs');
 
 var xhrTTP = new XMLHttpRequest();
 var keys_B = rsa.generateKeys(1024);
@@ -12,6 +13,7 @@ var res_keys;
 var Po;
 var xhrKeys = new XMLHttpRequest();
 var hashMensaje;
+
 
 
 xhrTTP.onload = function () {
