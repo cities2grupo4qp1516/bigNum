@@ -3,12 +3,55 @@ var bignum = require('bignum');
 var xml = require('xml');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var rsa = require('../rsa/rsa-bignum');
+var crypto = require('crypto');
 
 var xhrTTP = new XMLHttpRequest();
+var keys_B = rsa.generateKeys(1024);
+var res;
+var res_keys;
+var Po;
+var xhrKeys = new XMLHttpRequest();
+var hashMensaje;
+
 
 xhrTTP.onload = function () {
+
+    xhrKeys.open("GET", "http://localhost:4000/getKey/A");
+    xhrKeys.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhrKeys.send();
+
     console.log("5.- Ya he recibido el mensaje de A: ");
-    console.log(xhrTTP.responseText);
+    res = JSON.parse(xhrTTP.responseText);
+    hashMensaje = crypto.createHash('sha256').update(res.M).digest('hex');
+    console.log(hashMensaje);
+};
+
+xhrKeys.onload = function () {
+    res_keys = JSON.parse(xhrKeys.responseText);
+
+    var total;
+    console.log(Po);
+    var buffer = new Buffer(Po, 'base64').toString('ascii');
+
+    total = keys_B.publicKey.dec(bignum(buffer),bignum(res_keys.e),bignum(res_keys.n));
+
+
+    var ok = total.toBuffer().toString().split(",");
+
+    if(ok[2] == hashMensaje){
+
+      console.log("*********************************************");
+      console.log("El mensaje ha llegado correctamente!!!!!");
+      console.log("*********************************************");
+
+
+    }else{
+      console.log("*********************************************");
+      console.log("Te has equivocadooo!!!!!");
+      console.log("*********************************************");
+
+    }
+
 };
 xhrTTP.onerror = function () {
     console.log("Error");
@@ -55,12 +98,14 @@ router.post('/TTPtoB', function (req, res, next) {
     console.log("3.- Yo soy B, y el TTP me dice algo de A: ")
     console.log(req.body);
 
+    Po = req.body.Po;
+
     var msjToTTL = {
         L: "L",
         Pr: "Pr"
     };
 
-    var keys_B = rsa.generateKeys(1024);
+
     var Pr = bignum.fromBuffer(new Buffer("TTP" + "," + req.body.A + "," + req.body.L + "," + req.body.Po));
     Pr = keys_B.privateKey.encrypt(Pr);
     msjToTTL.Pr = Pr.toBuffer().toString('base64');
