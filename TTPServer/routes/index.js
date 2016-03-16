@@ -12,6 +12,8 @@ var http = require('http');
 var Pr;
 var keys_TTP = rsa.generateKeys(1024);
 var m;
+var L = Math.floor((Math.random() * 10) + 1);
+var mensajes = [];
 
 
 
@@ -25,30 +27,30 @@ var chat = sockjs.createServer();
 /*
 var cache = [];
 JSON.stringify(o, function(key, value) {
-    if (typeof value === 'object' && value !== null) {
-        if (cache.indexOf(value) !== -1) {
-            return;
-        }
-        cache.push(value);
-    }
-    return value;
+if (typeof value === 'object' && value !== null) {
+if (cache.indexOf(value) !== -1) {
+return;
+}
+cache.push(value);
+}
+return value;
 });
 cache = null;
 */
 function searchUserByConn(conn){
 
   var a = conn.id;
-   var c = -1;
-   console.log(connections.length);
-   for(var i=0; connections.length > i; i++){
-     var b = connections[i].id;
+  var c = -1;
+  console.log(connections.length);
+  for(var i=0; connections.length > i; i++){
+    var b = connections[i].id;
 
-     if (a == b){
-       c = i;
-       console.log(c);
-     }
-   }
-   return connections2[c];
+    if (a == b){
+      c = i;
+      console.log(c);
+    }
+  }
+  return connections2[c];
 };
 
 chat.on('connection', function (conn) {
@@ -73,15 +75,61 @@ chat.on('connection', function (conn) {
         A: searchUserByConn(conn)
         , B: data.B
         , Tr: Date.now()
-        , L: "L"
+        , L: L
         , Ps: "Ps"
       };
 
       var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + "," + MsjToA.B + "," + MsjToA.Tr + "," + MsjToA.L + "," + data.Po));
       Ps = keys_TTP.privateKey.encrypt(Ps);
       MsjToA.Ps = Ps.toBuffer().toString('base64');
+      console.log("MsjToA:");
       console.log(MsjToA);
       conn.write(JSON.stringify(MsjToA));
+
+      var msjToB = {
+        A: searchUserByConn(conn)
+        , L: L
+        , Po: data.Po
+      };
+
+      console.log("msjToB:");
+      console.log(msjToB);
+      conn.write(JSON.stringify(msjToB));
+      mensajes[L] = {mensaje: data.M, from: searchUserByConn(conn), to: data.B};
+      L++;
+
+
+      break;
+
+      case 2:
+      /*    5. TTP → B : L, M
+      4. TTP → A : A, B, TD, L, K, PR, PD*/
+
+      var Pd = bignum.fromBuffer(new Buffer(mensajes[data.L].from + "," + mensajes[data.L].to + "," + Date.now() + "," + data.L + "," + data.Pr));
+      Pd = keys_TTP.privateKey.encrypt(Pd);
+      var pd = Pd.toBuffer().toString('base64');
+
+      var msjFromTTPtoA = {
+        A: mensajes[data.L].from
+        , B: mensajes[data.L].to
+        , Td: Date.now()
+        , L: data.L
+        , K: "K"
+        , Pr: data.Pr
+        , Pd: pd
+      }
+      console.log("msjFromTTPtoA:");
+      console.log(msjFromTTPtoA);
+      conn.write(JSON.stringify(msjFromTTPtoA));
+
+      var msjFromAtoB = {
+        L: data.L
+        , M: mensajes[data.L].mensaje
+      };
+
+      console.log("msjFromAtoB:");
+      console.log(msjFromAtoB);
+      conn.write(JSON.stringify(msjFromAtoB));
 
       break;
     }
@@ -98,7 +146,7 @@ chat.on('connection', function (conn) {
 
 var server = http.createServer();
 chat.installHandlers(server, {
-    prefix: '/chat'
+  prefix: '/chat'
 });
 
 server.listen(9999, '0.0.0.0');

@@ -30,6 +30,8 @@
     "decimal.js": "^5.0.7",
     "js-sha256": "^0.3.0",
     "ng-file-upload": "^12.0.1",
-    "sockjs": "~0.3.4"
+    "sockjs": "~0.3.4",
+    "animate.css": "~3.5.1",
+    "moment": "~2.12.0"
   }
 }

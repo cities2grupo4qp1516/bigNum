@@ -22,7 +22,7 @@
                 sock.send(mensaje);
             };
             sock.onmessage = function (e) {
-                messages.push(e.data);
+                console.log(e.data);
             };
             sock.onopen = function () {
                 var mensaje = {};
@@ -48,6 +48,19 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         var keys;
         var xhr = new XMLHttpRequest();
         var xhrTTP = new XMLHttpRequest();
+	$scope.conversations = {A: {name: "A"}};
+	$scope.currentConversation = {
+		name: "A", 
+		messages: {
+			B: {
+				me: false, text: "hola", datetime: "2015-08-05T14:15:55+02:00"
+			},
+			p: {
+				me: true, text: "hola", datetime: "2015-08-05T14:16:55+02:00"
+			}
+		}
+	};
+	
 
         function downloadURI(uri, name) {
             var link = document.createElement("a");
@@ -93,7 +106,7 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         xhr.open("GET", config.URL + "bignum");
         xhr.responseType = "document";
         xhr.send();
-
+	  
         $scope.double = function () {
             var enviar = Base64.encode(bigNumber.toString());
             var xw = new XMLWriter('UTF-8');
@@ -394,4 +407,13 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             }
         }
         return Base64;
-    }]);
+    }]).filter('mlChatDate', mlChatDate);
+function mlChatDate() {
+    return filter;
+
+    function filter(input) {
+      if (!input || !input.length) { return; }
+
+      return moment(input).format('LLL');
+    }
+  }
