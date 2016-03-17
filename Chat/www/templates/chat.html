@@ -1,11 +1,6 @@
-<!--<ion-header-bar class="bar-light">
-    <ion-header-back-button ng-click="goBackChats()" class="button icon-left ion-chevron-left button-clear button-dark">Back</ion-header-back-button>
-    <div style="width: 75px" class="title"><img class="header-picture" width="50" height="auto" ng-src="{{datos.imagen}}">{{datos.name}}</div>
-</ion-header-bar> -->
-
-<ion-header-bar class="bar-stable bar bar-header disable-user-behavior" align-title="center">
+<ion-header-bar class="bar-balanced bar bar-header disable-user-behavior" align-title="center">
     <button ng-click="$ionicGoBack()" class="button back-button buttons button-clear header-item"><i class="icon ion-ios-arrow-back"></i>
-        <span class="back-text" style="transform: translate3d(0px, 0px, 0px);"><span class="default-title hide">Back</span><span class="previous-title">Chats</span></span>
+        <span class="back-text" style="transform: translate3d(0px, 0px, 0px);"><span class="default-title hide">Back</span><span class="previous-title">Chat</span></span>
     </button>
     <div class="title title-center header-item" style="transform: translate3d(0px, 0px, 0px); left: 67px; right: 67px;">{{datos.name}}</div>
     <div class="buttons buttons-right"><span class="right-buttons">
@@ -28,15 +23,16 @@
         </div>
     </div>
 </ion-content>
-<ion-footer-bar keyboard-attach class="bar-stable footer-chat item-input-inset">
-    <button class="button button-clear button-icon button-positive icon ion-ios-upload-outline"></button>
-
+<ion-footer-bar keyboard-attach class="bar-stable footer-chat item-input-inset" novalidate>
     <label class="item-input-wrapper">
         <input ng-model="chat.message" dir="auto" type="text" />
     </label>
 
     <span ng-if="chat.message.length > 0">
-      <button ng-click="chat.sendMessage()" class="button button-clear button-positive">Send</button>
+        <div class="footer-btn-wrap">
+            <button class="button button-icon icon ion-android-send footer-btn" type="submit">
+            </button>
+        </div>
     </span>
     <span ng-if="!chat.message || chat.message.length === 0">
       <button class="button button-clear button-icon button-positive icon ion-ios-camera-outline"></button>

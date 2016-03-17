@@ -12,13 +12,13 @@ angular.module('app.controllers', [])
     var chats = [];
     chats.push({
         imagen: "img/adri.jpg"
-        , name: "Adri"
+        , name: "AdriCouci"
         , text: "Como mola Bareando"
     });
 
     chats.push({
         imagen: "img/marc.jpg"
-        , name: "Marc"
+        , name: "Marc Martínez"
         , text: "Ponte a programar"
     });
 
