@@ -2,65 +2,152 @@
  * Created by BestTeamEver on 21/02/2016.
  */
 
-/*
-*
-*
-*
-*SOOOOOOOOCKEEEEEEEEEETTTTTSSS!
-*
-*
-*
-*/
-
-
-
-
-      var sock = new SockJS('http://localhost:9999/chat');
-
-            var messages = [];
-            function sendMessage(mensaje){
-                sock.send(mensaje);
-            };
-            sock.onmessage = function (e) {
-                console.log(e.data);
-            };
-            sock.onopen = function () {
-                var mensaje = {};
-                mensaje.tipo = 0;
-                mensaje.user = "A";
-                mensaje = JSON.stringify(mensaje);
-                sock.send(mensaje);
-            };
-        
-
-/**************************************************************************/
-
-
-var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger']);
+var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger', 'bd.sockjs']);
 
 bigNumApp.constant('config', {
     URL: "http://localhost:3000/",
     URLTTP: "http://localhost:4000/"
 });
 
+bigNumApp.controller('ChatController', ['$scope', 'BigInteger', 'rsaKey', 'Base64', 'config', 'mySocket', function ($scope, BigInteger, rsaKey, Base64, config, sock) {
+    var keys = rsaKey.generateKeys(512);
+    $scope.conversations = {
+        B: {
+            name: "B"
+        },
+        C: {
+            name: "C"
+        }
+    };
+    var conversaciones = [];
+    conversaciones["B"] = {
+        name: "B",
+        messages: [{
+                me: false,
+                text: "hola",
+                datetime: "2015-08-05T14:15:55+02:00"
+        },
+            {
+                me: true,
+                text: "hola",
+                datetime: "2015-08-05T14:16:55+02:00"
+        }]
+    };
+    conversaciones["C"] = {
+        name: "C",
+        messages: [{
+                me: false,
+                text: "adeu",
+                datetime: "2015-08-05T14:15:55+02:00"
+        },
+            {
+                me: true,
+                text: "adeu",
+                datetime: "2015-08-05T14:16:55+02:00"
+        }]
+    };
+    console.log(conversaciones);
+
+    $scope.switchConversation = function (conv) {
+        console.log(conv.name);
+        $scope.currentConversation = conversaciones[conv.name];
+    };
+
+    $scope.currentConversation = {
+        name: "B",
+        messages: [{
+                me: false,
+                text: "hola",
+                datetime: "2015-08-05T14:15:55+02:00"
+        },
+            {
+                me: true,
+                text: "hola",
+                datetime: "2015-08-05T14:16:55+02:00"
+        }]
+    };
+
+    $scope.enviar = function () {
+        var mensaje = $scope.message;
+        var hashMensaje = sha256(mensaje);
+        var msjToEncrypt = "TTP,B," + hashMensaje;
+        var bytes = new BigInteger(rsaKey.String2bin(msjToEncrypt));
+        var P0 = keys.privateKey.encrypt(bytes);
+        var msjToTTP = {
+            tipo: 1,
+            TTP: "TTP",
+            B: "B",
+            M: mensaje,
+            Po: Base64.encode(P0.toString())
+        };
+        console.log($scope.message);
+        sendMessage(JSON.stringify(msjToTTP));
+    }
+    var messages = [];
+
+    function sendMessage(mensaje) {
+        sock.send(mensaje);
+    };
+    //TTP, B, M, PO
+    var test = {
+        tipo: 1,
+        TTP: "TTP",
+        B: "B",
+        M: "HOLA",
+        PO: "cosa rara"
+    }
+
+
+
+}]).factory('mySocket', function (socketFactory) {
+    var sockjs = new SockJS('http://localhost:9999/chat');
+
+    sockjs.onopen = function () {
+        console.log("ola");
+        var mensaje = {};
+        mensaje.tipo = 0;
+        mensaje.user = "A";
+        mensaje = JSON.stringify(mensaje);
+        sockjs.send(mensaje);
+    };
+
+    sockjs.onmessage = function (e) {
+        console.log("e");
+        console.log(e.data);
+    };
+
+    mySocket = socketFactory({
+        socket: sockjs
+    });
+
+    return mySocket;
+});;
 bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Base64', 'config', function ($scope, BigInteger, rsaKey, Base64, config) {
         var bigNumber;
         var keys;
         var xhr = new XMLHttpRequest();
         var xhrTTP = new XMLHttpRequest();
-	$scope.conversations = {A: {name: "A"}};
-	$scope.currentConversation = {
-		name: "A", 
-		messages: {
-			B: {
-				me: false, text: "hola", datetime: "2015-08-05T14:15:55+02:00"
-			},
-			p: {
-				me: true, text: "hola", datetime: "2015-08-05T14:16:55+02:00"
-			}
-		}
-	};
-	
+        $scope.conversations = {
+            A: {
+                name: "A"
+            }
+        };
+        $scope.currentConversation = {
+            name: "A",
+            messages: {
+                B: {
+                    me: false,
+                    text: "hola",
+                    datetime: "2015-08-05T14:15:55+02:00"
+                },
+                p: {
+                    me: true,
+                    text: "hola",
+                    datetime: "2015-08-05T14:16:55+02:00"
+                }
+            }
+        };
+
 
         function downloadURI(uri, name) {
             var link = document.createElement("a");
@@ -106,7 +193,7 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         xhr.open("GET", config.URL + "bignum");
         xhr.responseType = "document";
         xhr.send();
-	  
+
         $scope.double = function () {
             var enviar = Base64.encode(bigNumber.toString());
             var xw = new XMLWriter('UTF-8');
@@ -203,9 +290,9 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             xhrTTP.open("POST", config.URLTTP + "AtoB");
             xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhrTTP.send(JSON.stringify(msjToTTP));
-		msjToTTP.tipo = 1;
-	    sendMessage(JSON.stringify(msjToTTP));
-	
+            msjToTTP.tipo = 1;
+            sendMessage(JSON.stringify(msjToTTP));
+
         };
         $scope.confirmTTP = function () {
             xhrTTP.open("GET", config.URLTTP + "AconfirmB");
@@ -409,12 +496,15 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         }
         return Base64;
     }]).filter('mlChatDate', mlChatDate);
+
 function mlChatDate() {
     return filter;
 
     function filter(input) {
-      if (!input || !input.length) { return; }
-console.log(moment(input).format('LLL'));
-      return moment(input).format('LLL');
+        if (!input || !input.length) {
+            return;
+        }
+        console.log(moment(input).format('LLL'));
+        return moment(input).format('LLL');
     }
-  }
+}
