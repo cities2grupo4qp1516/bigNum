@@ -1,0 +1,126 @@
+<!DOCTYPE>
+<html ng-app="bigNumApp">
+
+<head>
+    <title>Cities2 - bigNum</title>
+
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/flexslider.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,300,700&amp;subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,700,900' rel='stylesheet'
+          type='text/css'>
+
+    <script src="bower_components/XMLWriter/XMLWriter.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-jsbn-big-integer/big-integer.js"></script>
+    <script src="bower_components/decimal.js/decimal.min.js"></script>
+    <script src="bower_components/js-sha256/build/sha256.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+    <script src="js/modernizr.js"></script>
+    <meta charset="UTF-8">
+
+</head>
+
+<body class="image-background">
+
+<div id="preloader">
+    <div id="loading-animation">&nbsp;</div>
+</div>
+
+<header class="site-header">
+    <nav id="navigation" class="navigation site-nav navbar">
+        <div class="navbar-header onstart animated" data-animation="fadeInDown" data-animation-delay="1200">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">
+                <h2 style="font-weight: initial; color: #2AAB41;">BigNumber</h2>
+            </a>
+        </div>
+    </nav>
+</header>
+
+<div id="fullpage">
+    <div class="section home active" id="section0" ng-controller="BignumController">
+        <div class="container" style="width: 100%;">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="slide-content">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <h1>{{bignum}}</h1>
+                        <br>
+                        <br>
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="double()">Duplicar BigNumber
+                        </button>
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="random()">Otro número aleatorio
+                        </button>
+
+                        <br>
+
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="sendTTP()">Mensaje para TTP
+                        </button>
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="confirmTTP()">Confirmar recepción
+                        </button>
+                        <br>
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="createKeys()">Crear y descargar claves
+                        </button>
+                        <button class="border-button bt-border-white go-slide onstart animated fadeInUp visible"
+                                data-animation="fadeInUp" data-animation-delay="1000" data-slide="2"
+                                ng-click="loadKeys()">Cargar claves
+                        </button>
+                        <input style="display: none;" type="file" id="files" name="files[]" accept=".RSA"/>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer onstart animated" data-animation="fadeInUp" data-animation-delay="800">
+    <p class="copyright">© 2016 Cities2 - Todos los derechos reservados</p>
+</footer>
+
+<div class="viewport-border">
+    <div class="vb-l"></div>
+    <div class="vb-r"></div>
+    <div class="vb-t"></div>
+    <div class="vb-b"></div>
+</div>
+
+<div class="overlay">
+    <div class="gradient-overlay background-blue-dark opacity-20"></div>
+</div>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/plugins.js"></script>
+
+<script src="js/main.js"></script>
+<script src="js/js.js"></script>
+<script src="js/bignumber.js"></script>
+
+</body>
+
+</html>

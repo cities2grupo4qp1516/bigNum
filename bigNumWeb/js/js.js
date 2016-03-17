@@ -2,6 +2,40 @@
  * Created by BestTeamEver on 21/02/2016.
  */
 
+/*
+*
+*
+*
+*SOOOOOOOOCKEEEEEEEEEETTTTTSSS!
+*
+*
+*
+*/
+
+
+
+
+      var sock = new SockJS('http://localhost:9999/chat');
+
+            var messages = [];
+            function sendMessage(mensaje){
+                sock.send(mensaje);
+            };
+            sock.onmessage = function (e) {
+                console.log(e.data);
+            };
+            sock.onopen = function () {
+                var mensaje = {};
+                mensaje.tipo = 0;
+                mensaje.user = "A";
+                mensaje = JSON.stringify(mensaje);
+                sock.send(mensaje);
+            };
+        
+
+/**************************************************************************/
+
+
 var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger']);
 
 bigNumApp.constant('config', {
@@ -14,6 +48,19 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         var keys;
         var xhr = new XMLHttpRequest();
         var xhrTTP = new XMLHttpRequest();
+	$scope.conversations = {A: {name: "A"}};
+	$scope.currentConversation = {
+		name: "A", 
+		messages: {
+			B: {
+				me: false, text: "hola", datetime: "2015-08-05T14:15:55+02:00"
+			},
+			p: {
+				me: true, text: "hola", datetime: "2015-08-05T14:16:55+02:00"
+			}
+		}
+	};
+	
 
         function downloadURI(uri, name) {
             var link = document.createElement("a");
@@ -59,7 +106,7 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         xhr.open("GET", config.URL + "bignum");
         xhr.responseType = "document";
         xhr.send();
-
+	  
         $scope.double = function () {
             var enviar = Base64.encode(bigNumber.toString());
             var xw = new XMLWriter('UTF-8');
@@ -156,6 +203,9 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             xhrTTP.open("POST", config.URLTTP + "AtoB");
             xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhrTTP.send(JSON.stringify(msjToTTP));
+		msjToTTP.tipo = 1;
+	    sendMessage(JSON.stringify(msjToTTP));
+	
         };
         $scope.confirmTTP = function () {
             xhrTTP.open("GET", config.URLTTP + "AconfirmB");
@@ -358,4 +408,13 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             }
         }
         return Base64;
-    }]);
+    }]).filter('mlChatDate', mlChatDate);
+function mlChatDate() {
+    return filter;
+
+    function filter(input) {
+      if (!input || !input.length) { return; }
+console.log(moment(input).format('LLL'));
+      return moment(input).format('LLL');
+    }
+  }

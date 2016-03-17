@@ -1,0 +1,17 @@
+<ion-view title="Chats">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <ion-list>
+            <ion-item ng-click="getChat(chat)" ng-repeat="chat in chats" class="item-chat item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
+                <img ng-src="{{chat.imagen}}">
+                <h2>{{chat.name}}</h2>
+                <p>{{chat.text}}</p>
+                <i style="float: right; color: blue" class="fa fa-check"></i>
+                <i style="float: right; color: green; left: 50px" class="fa fa-check"></i>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+                <ion-option-button class="button-assertive" ng-click="chats.remove(chat)">
+                    Delete
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
