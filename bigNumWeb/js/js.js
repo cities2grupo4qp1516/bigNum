@@ -96,11 +96,13 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                 }
             };
             var file = "";
-            var data = new Blob([Base64.encode(JSON.stringify(keysToFile))], {type: 'text/plain'});
+            var data = new Blob([Base64.encode(JSON.stringify(keysToFile))], {
+                type: 'text/plain'
+            });
             var keysToTTP = {
-                user: "A"
-                , e: keys.publicKey.e.toString()
-                , n: keys.publicKey.n.toString()
+                user: "A",
+                e: keys.publicKey.e.toString(),
+                n: keys.publicKey.n.toString()
             };
 
             if (file !== null) {
@@ -126,9 +128,9 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                     var fileKeys = JSON.parse(Base64.decode(reader.result));
                     keys = rsaKey.importKeys(JSON.parse(Base64.decode(reader.result)));
                     var keysToTTP = {
-                        user: "A"
-                        , e: keys.publicKey.e.toString()
-                        , n: keys.publicKey.n.toString()
+                        user: "A",
+                        e: keys.publicKey.e.toString(),
+                        n: keys.publicKey.n.toString()
                     };
                     xhrTTP.open("POST", config.URLTTP + "sendKey");
                     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -143,10 +145,10 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             var bytes = new BigInteger(rsaKey.String2bin(msjToEncrypt));
             var P0 = keys.privateKey.encrypt(bytes);
             var msjToTTP = {
-                TTP: "TTP"
-                , B: "B"
-                , M: mensaje
-                , Po: Base64.encode(P0.toString())
+                TTP: "TTP",
+                B: "B",
+                M: mensaje,
+                Po: Base64.encode(P0.toString())
             };
 
             console.log("1.- Soy A y mando esto al TTP: ");
@@ -162,63 +164,62 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
     }])
     .factory('rsaKey', ['BigInteger', 'primeNumber', function (BigInteger, primeNumber) {
         var rsa = {
-                publicKey: function (bits, n, e) {
-                    this.bits = bits;
-                    this.n = n;
-                    this.e = e;
-                },
-                privateKey: function (p, q, d, publicKey) {
-                    this.p = p;
-                    this.q = q;
-                    this.d = d;
-                    this.publicKey = publicKey;
-                },
-                importKeys: function (impotedKeys) {
-                    var keys = {};
-                    impotedKeys.privateKey.publicKey.e = new BigInteger(impotedKeys.privateKey.publicKey.e);
-                    impotedKeys.privateKey.publicKey.n = new BigInteger(impotedKeys.privateKey.publicKey.n);
-                    keys.publicKey = new rsa.publicKey(impotedKeys.publicKey.bits, new BigInteger(impotedKeys.publicKey.n), new BigInteger(impotedKeys.publicKey.e));
-                    keys.privateKey = new rsa.privateKey(new BigInteger(impotedKeys.privateKey.p), new BigInteger(impotedKeys.privateKey.q), new BigInteger(impotedKeys.privateKey.d), impotedKeys.privateKey.publicKey);
-                    return keys;
-                },
-                generateKeys: function (bitlength) {
-                    var p, q, n, phi, e, d, keys = {}, one = new BigInteger('1');
-                    this.bitlength = bitlength || 2048;
-                    console.log("Generating RSA keys of", this.bitlength, "bits");
-                    p = primeNumber.aleatorio(bitlength);
-                    do {
-                        q = primeNumber.aleatorio(bitlength);
-                    } while (q.compareTo(p) === 0);
-                    n = p.multiply(q);
+            publicKey: function (bits, n, e) {
+                this.bits = bits;
+                this.n = n;
+                this.e = e;
+            },
+            privateKey: function (p, q, d, publicKey) {
+                this.p = p;
+                this.q = q;
+                this.d = d;
+                this.publicKey = publicKey;
+            },
+            importKeys: function (impotedKeys) {
+                var keys = {};
+                impotedKeys.privateKey.publicKey.e = new BigInteger(impotedKeys.privateKey.publicKey.e);
+                impotedKeys.privateKey.publicKey.n = new BigInteger(impotedKeys.privateKey.publicKey.n);
+                keys.publicKey = new rsa.publicKey(impotedKeys.publicKey.bits, new BigInteger(impotedKeys.publicKey.n), new BigInteger(impotedKeys.publicKey.e));
+                keys.privateKey = new rsa.privateKey(new BigInteger(impotedKeys.privateKey.p), new BigInteger(impotedKeys.privateKey.q), new BigInteger(impotedKeys.privateKey.d), impotedKeys.privateKey.publicKey);
+                return keys;
+            },
+            generateKeys: function (bitlength) {
+                var p, q, n, phi, e, d, keys = {},
+                    one = new BigInteger('1');
+                this.bitlength = bitlength || 2048;
+                console.log("Generating RSA keys of", this.bitlength, "bits");
+                p = primeNumber.aleatorio(bitlength);
+                do {
+                    q = primeNumber.aleatorio(bitlength);
+                } while (q.compareTo(p) === 0);
+                n = p.multiply(q);
 
-                    phi = p.subtract(one).multiply(q.subtract(one));
+                phi = p.subtract(one).multiply(q.subtract(one));
 
-                    e = new BigInteger('65537');
-                    d = e.modInverse(phi);
+                e = new BigInteger('65537');
+                d = e.modInverse(phi);
 
-                    keys.publicKey = new rsa.publicKey(this.bitlength, n, e);
-                    keys.privateKey = new rsa.privateKey(p, q, d, keys.publicKey);
-                    return keys;
-                }
-
-                ,
-                String2bin: function (str) {
-                    var bytes = [];
-                    for (var i = 0; i < str.length; ++i) {
-                        bytes.push(str.charCodeAt(i));
-                    }
-                    return bytes;
-                }
-                ,
-                bin2String: function (array) {
-                    var result = "";
-                    for (var i = 0; i < array.length; i++) {
-                        result += String.fromCharCode(array[i]);
-                    }
-                    return result;
-                }
+                keys.publicKey = new rsa.publicKey(this.bitlength, n, e);
+                keys.privateKey = new rsa.privateKey(p, q, d, keys.publicKey);
+                return keys;
             }
-            ;
+
+            ,
+            String2bin: function (str) {
+                var bytes = [];
+                for (var i = 0; i < str.length; ++i) {
+                    bytes.push(str.charCodeAt(i));
+                }
+                return bytes;
+            },
+            bin2String: function (array) {
+                var result = "";
+                for (var i = 0; i < array.length; i++) {
+                    result += String.fromCharCode(array[i]);
+                }
+                return result;
+            }
+        };
 
 
         rsa.publicKey.prototype = {
@@ -267,8 +268,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
     }])
     .factory('Base64', [function () {
         var Base64 = {
-            _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-            , encode: function (e) {
+            _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+            encode: function (e) {
                 var t = "";
                 var n, r, i, s, o, u, a;
                 var f = 0;
@@ -289,8 +290,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                     t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
                 }
                 return t
-            }
-            , decode: function (e) {
+            },
+            decode: function (e) {
                 var t = "";
                 var n, r, i;
                 var s, o, u, a;
@@ -314,8 +315,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                 }
                 t = Base64._utf8_decode(t);
                 return t
-            }
-            , _utf8_encode: function (e) {
+            },
+            _utf8_encode: function (e) {
                 e = e.replace(/\r\n/g, "\n");
                 var t = "";
                 for (var n = 0; n < e.length; n++) {
@@ -332,8 +333,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                     }
                 }
                 return t
-            }
-            , _utf8_decode: function (e) {
+            },
+            _utf8_decode: function (e) {
                 var t = "";
                 var n = 0;
                 var r = c1 = c2 = 0;
