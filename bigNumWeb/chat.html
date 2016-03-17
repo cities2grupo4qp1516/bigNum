@@ -2,6 +2,7 @@
 <html lang="en" ng-app="bigNumApp">
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="bower_components/animate.css/animate.css" rel="stylesheet" />
@@ -29,7 +30,6 @@
         <div class="mdl-color--cyan ml-header relative clear">
             <div class="p-20">
                 <h3 class="mdl-color-text--white m-t-20 m-b-5">Chat</h3>
-                <h4 class="mdl-color-text--cyan-100 m-b-20 no-m-t w100">Give fast and easy support using this easy to use chat app.</h4>
             </div>
         </div>
 
@@ -43,7 +43,7 @@
                             <ul class="list-bordered">
                                 <li ng-repeat="conversation in conversations">
                                     <a href ng-click="switchConversation(conversation)">
-                                        <i class="material-icons m-r-5 f11">chat</i> {{ conversation.name }}
+                                        <i class="material-icons m-r-5 f11">chat</i> {{conversation.name}}
                                     </a>
                                 </li>
                             </ul>
@@ -61,9 +61,14 @@
                         <div class="chat-container p-15">
 
                             <div class="message-wrapper" ng-class="{ me: message.me, them: !message.me }" ng-repeat="message in currentConversation.messages">
-                                <img src="img/icons/ballicons/converse.svg" class="img-responsive circle-wrapper animated bounceIn mdl-shadow--0dp" ng-show="message.me">
-                                <img src="img/icons/ballicons/skate.svg" class="img-responsive circle-wrapper animated bounceIn mdl-shadow--0dp" ng-hide="message.me">
-                                <div class="text-wrapper animated fadeIn mdl-shadow--0dp">{{ message.text }}</div>
+                                <img src="img/makitos.jpg" class="img-responsive circle-wrapper animated bounceIn mdl-shadow--0dp" ng-show="message.me">
+                                <img src="img/adricouci.jpg" class="img-responsive circle-wrapper animated bounceIn mdl-shadow--0dp" ng-hide="message.me">
+                                <div class="text-wrapper animated fadeIn mdl-shadow--0dp">{{ message.text }}
+                                    <i ng-show="message.ticks[0]" style="float: right; color: green" class="fa fa-check"></i>
+                                    <i ng-show="message.ticks[1]" style="float: right; color: green" class="fa fa-check"></i>
+                                    <i ng-show="message.ticks[2]" style="float: right; color: blue" class="fa fa-check"></i>
+                                    <i ng-show="message.ticks[3]" style="float: right; color: blue" class="fa fa-check"></i>
+                                    <i ng-show="message.ticks[4]" style="float: right; color: red" class="fa fa-times"></i></div>
                                 <div class="f11 mdl-color-text--grey-400 animated m-h-20 clear" ng-class="{ fadeInLeft: message.me, 'fadeInRight text-right': !message.me }">{{ message.datetime | mlChatDate }}</div>
                             </div>
 

@@ -45,79 +45,90 @@ chat.on('connection', function (conn) {
         var data = JSON.parse(message);
         console.log(message);
         switch (data.tipo) {
-            case 0:
-                //User registration
-                connections[usuariosConectados] = conn;
-                connections2[usuariosConectados] = data.user;
-                usuariosConectados++;
-                //console.log(connections);
-                break;
-            case 1:
-                //  TTP, B, M, PO
-                /*  TTP → A : A, B, TR, L, PS
-                 3. TTP → B : A, L, PO*/
+        case 0:
+            //User registration
+            connections[usuariosConectados] = conn;
+            connections2[usuariosConectados] = data.user;
+            usuariosConectados++;
+            //console.log(connections);
+            break;
+        case 1:
+            //  TTP, B, M, PO
+            /*  TTP → A : A, B, TR, L, PS
+             3. TTP → B : A, L, PO*/
 
-                var MsjToA = {
-                    A: searchUserByConn(conn)
-                    , B: data.B
-                    , Tr: Date.now()
-                    , L: L
-                    , Ps: "Ps"
-                };
+            var MsjToA = {
+                A: searchUserByConn(conn)
+                , B: data.B
+                , Tr: Date.now()
+                , L: L
+                , Ps: "Ps"
+                , Type: 1
+            };
 
-                var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + "," + MsjToA.B + "," + MsjToA.Tr + "," + MsjToA.L + "," + data.Po));
-                Ps = keys_TTP.privateKey.encrypt(Ps);
-                MsjToA.Ps = Ps.toBuffer().toString('base64');
-                console.log("MsjToA:");
-                console.log(MsjToA);
-                conn.write(JSON.stringify(MsjToA));
+            var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + "," + MsjToA.B + "," + MsjToA.Tr + "," + MsjToA.L + "," + data.Po));
+            Ps = keys_TTP.privateKey.encrypt(Ps);
+            MsjToA.Ps = Ps.toBuffer().toString('base64');
+            console.log("MsjToA:");
+            console.log(MsjToA);
+            conn.write(JSON.stringify(MsjToA));
 
-                var msjToB = {
-                    A: searchUserByConn(conn)
-                    , L: L
-                    , Po: data.Po
-                };
+            var msjToB = {
+                A: searchUserByConn(conn)
+                , L: L
+                , Po: data.Po
+                , Type: 2
+            };
 
-                console.log("msjToB:");
-                console.log(msjToB);
-                conn.write(JSON.stringify(msjToB));
-                mensajes[L] = {mensaje: data.M, from: searchUserByConn(conn), to: data.B};
-                L++;
+            console.log("msjToB:");
+            console.log(msjToB);
+            connections[connections2.indexOf(data.B)].write(JSON.stringify(msjToB));
+            mensajes[L] = {
+                mensaje: data.M
+                , from: searchUserByConn(conn)
+                , to: data.B
+            };
+            L++;
 
 
-                break;
+            break;
 
-            case 2:
-                /*    5. TTP → B : L, M
-                 4. TTP → A : A, B, TD, L, K, PR, PD*/
+        case 2:
+            /*    5. TTP → B : L, M
+             4. TTP → A : A, B, TD, L, K, PR, PD*/
 
-                var Pd = bignum.fromBuffer(new Buffer(mensajes[data.L].from + "," + mensajes[data.L].to + "," + Date.now() + "," + data.L + "," + data.Pr));
-                Pd = keys_TTP.privateKey.encrypt(Pd);
-                var pd = Pd.toBuffer().toString('base64');
+            var Pd = bignum.fromBuffer(new Buffer(mensajes[data.L].from + "," + mensajes[data.L].to + "," + Date.now() + "," + data.L + "," + data.Pr));
+            Pd = keys_TTP.privateKey.encrypt(Pd);
+            var pd = Pd.toBuffer().toString('base64');
 
-                var msjFromTTPtoA = {
-                    A: mensajes[data.L].from
-                    , B: mensajes[data.L].to
-                    , Td: Date.now()
-                    , L: data.L
-                    , K: "K"
-                    , Pr: data.Pr
-                    , Pd: pd
-                }
-                console.log("msjFromTTPtoA:");
-                console.log(msjFromTTPtoA);
-                conn.write(JSON.stringify(msjFromTTPtoA));
+            var msjFromTTPtoA = {
+                A: mensajes[data.L].from
+                , B: mensajes[data.L].to
+                , Td: Date.now()
+                , L: data.L
+                , K: "K"
+                , Pr: data.Pr
+                , Pd: pd
+            }
+            console.log("msjFromTTPtoA:");
+            console.log(msjFromTTPtoA);
+            connections[connections2.indexOf(mensajes[data.L].to)].write(JSON.stringify(msjFromTTPtoA));
 
-                var msjFromAtoB = {
-                    L: data.L
-                    , M: mensajes[data.L].mensaje
-                };
+            var msjFromAtoB = {
+                L: data.L
+                , M: mensajes[data.L].mensaje
+                , Type: 3
+            };
+            if (mensajes[data.L].mensaje == "Juan, esto va a fallar") {
+                msjFromAtoB.M = "Ves, ha fallado";
+            };
 
-                console.log("msjFromAtoB:");
-                console.log(msjFromAtoB);
-                conn.write(JSON.stringify(msjFromAtoB));
 
-                break;
+            console.log("msjFromAtoB:");
+            console.log(msjFromAtoB);
+            conn.write(JSON.stringify(msjFromAtoB));
+
+            break;
         }
     });
     conn.on('close', function () {
@@ -140,17 +151,16 @@ server.listen(9999, '0.0.0.0');
 
 router.post('/sendKey', function (req, res) {
     publicKeys.findOneAndUpdate({
-            user: req.body.user
-        }, {
-            user: req.body.user,
-            e: req.body.e,
-            n: req.body.n
-        }, {
-            upsert: true
-        }, function (err) {
-            console.log(err);
-        }
-    );
+        user: req.body.user
+    }, {
+        user: req.body.user
+        , e: req.body.e
+        , n: req.body.n
+    }, {
+        upsert: true
+    }, function (err) {
+        console.log(err);
+    });
     res.send(200);
 });
 router.get('/getKey/:user', function (req, res) {
@@ -262,8 +272,7 @@ router.get('/AconfirmB', function (req, res) {
                 }, {
                     upsert: false
                 }
-                , function (err, data) {
-                });
+                , function (err, data) {});
         } else
             res.sendStatus(404);
     });

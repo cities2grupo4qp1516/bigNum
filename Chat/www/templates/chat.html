@@ -11,7 +11,19 @@
 
 <ion-content style="background: url(img/playa.jpg) center; background-size: cover;" class="chat" delegate-handle="chatScroll">
     <div class="message-list">
-        <div class="message-wrapper">
+
+        <div ng-repeat="message in currentConversation.messages" class="message-wrapper">
+            <div class="message" ng-class="{ 'message-mine': message.me, 'message-other': !message.me }">
+                <div class="message-text">{{message.text}}</div>
+                <i ng-show="message.ticks[0]" style="float: right; color: green" class="fa fa-check"></i>
+                <i ng-show="message.ticks[1]" style="float: right; color: green" class="fa fa-check"></i>
+                <i ng-show="message.ticks[2]" style="float: right; color: blue" class="fa fa-check"></i>
+                <i ng-show="message.ticks[3]" style="float: right; color: blue" class="fa fa-check"></i>
+                <i ng-show="message.ticks[4]" style="float: right; color: red" class="fa fa-times"></i>
+            </div>
+        </div>
+
+        <!--<div class="message-wrapper">
             <div class="message message-other">
                 <div class="message-text">Como va el martes a las 17:00 para jugar?</div>
             </div>
@@ -20,7 +32,8 @@
             <div class="message message-mine">
                 <div class="message-text">Perfecto me va genial</div>
             </div>
-        </div>
+        </div>-->
+
     </div>
 </ion-content>
 <ion-footer-bar keyboard-attach class="bar-stable footer-chat item-input-inset" novalidate>
@@ -30,7 +43,7 @@
 
     <span ng-if="chat.message.length > 0">
         <div class="footer-btn-wrap">
-            <button class="button button-icon icon ion-android-send footer-btn" type="submit">
+            <button class="button button-icon icon ion-android-send footer-btn" type="submit" ng-click="EnviarMensaje()">
             </button>
         </div>
     </span>

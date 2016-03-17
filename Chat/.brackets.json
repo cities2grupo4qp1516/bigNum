@@ -1,5 +1,6 @@
 {
     "jscodehints.detectedExclusions": [
-        "C:/Users/Couci/Desktop/UNI/4t Curs/Quadrimestre 1/Cities 2/Proyectos/Chat/www/js/controllers.js"
+        "C:/Users/Couci/Desktop/UNI/4t Curs/Quadrimestre 1/Cities 2/Proyectos/Chat/www/js/controllers.js",
+        "C:/xampp/htdocs/bigNum/Chat/www/js/app.js"
     ]
 }
