@@ -38,6 +38,5 @@
   },
   "_source": "git://github.com/MikeMcl/decimal.js.git",
   "_target": "^5.0.8",
-  "_originalSource": "decimal.js",
-  "_direct": true
+  "_originalSource": "decimal.js"
 }

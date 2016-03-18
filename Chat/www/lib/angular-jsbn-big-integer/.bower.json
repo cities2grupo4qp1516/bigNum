@@ -25,6 +25,5 @@
   },
   "_source": "git://github.com/andyperlitch/angular-jsbn-big-integer.git",
   "_target": "^0.0.2",
-  "_originalSource": "angular-jsbn-big-integer",
-  "_direct": true
+  "_originalSource": "angular-jsbn-big-integer"
 }
