@@ -53,7 +53,7 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
         }, {
             me: false,
             text: "Muy bien Marc, tu que tal?",
-            ticks: [true, true, false, false, false]
+            ticks: [false, false, true, true, false]
         }]
     };
     conversaciones["Nacho"] = {
@@ -93,7 +93,7 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
         messages: [{
             me: true,
             text: "Como va eso AdriCouci",
-            ticks: [false, false, true, true, false]
+            ticks: [true, true, false, false, false]
         }, {
             me: false,
             text: "Muy bien Marc, tu que tal?",

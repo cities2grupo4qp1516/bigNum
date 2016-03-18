@@ -68,7 +68,7 @@ angular.module('app.controllers', [])
         messages: [{
             me: false,
             text: "Como va eso AdriCouci",
-            ticks: [true, true, false, false, false]
+            ticks: [false, false, true, true, false]
         }, {
             me: true,
             text: "Muy bien Marc, tu que tal?",
