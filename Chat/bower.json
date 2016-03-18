@@ -9,6 +9,7 @@
     "angular-jsbn-big-integer": "^0.0.2",
     "sockjs": "^0.3.4",
     "angular-sockjs": "^0.1.0",
-    "js-sha256": "^0.3.0"
+    "js-sha256": "^0.3.0",
+    "font-awesome": "^4.5.0"
   }
 }
