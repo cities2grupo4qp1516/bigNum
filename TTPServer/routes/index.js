@@ -30,11 +30,13 @@ function searchUserByConn(conn) {
     var c = -1;
     console.log(connections.length);
     for (var i = 0; connections.length > i; i++) {
-        var b = connections[i].id;
+        if (connections[i] != null) {
+            var b = connections[i].id;
 
-        if (a == b) {
-            c = i;
-            console.log(c);
+            if (a == b) {
+                c = i;
+                console.log(c);
+            }
         }
     }
     return connections2[c];
@@ -50,6 +52,8 @@ chat.on('connection', function (conn) {
             connections[usuariosConectados] = conn;
             connections2[usuariosConectados] = data.user;
             usuariosConectados++;
+            console.log(connections);
+            console.log(connections2);
             //console.log(connections);
             break;
         case 1:
@@ -58,12 +62,12 @@ chat.on('connection', function (conn) {
              3. TTP → B : A, L, PO*/
 
             var MsjToA = {
-                A: searchUserByConn(conn)
-                , B: data.B
-                , Tr: Date.now()
-                , L: L
-                , Ps: "Ps"
-                , Type: 1
+                A: searchUserByConn(conn),
+                B: data.B,
+                Tr: Date.now(),
+                L: L,
+                Ps: "Ps",
+                Type: 1
             };
 
             var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + "," + MsjToA.B + "," + MsjToA.Tr + "," + MsjToA.L + "," + data.Po));
@@ -74,19 +78,19 @@ chat.on('connection', function (conn) {
             conn.write(JSON.stringify(MsjToA));
 
             var msjToB = {
-                A: searchUserByConn(conn)
-                , L: L
-                , Po: data.Po
-                , Type: 2
+                A: searchUserByConn(conn),
+                L: L,
+                Po: data.Po,
+                Type: 2
             };
 
             console.log("msjToB:");
             console.log(msjToB);
             connections[connections2.indexOf(data.B)].write(JSON.stringify(msjToB));
             mensajes[L] = {
-                mensaje: data.M
-                , from: searchUserByConn(conn)
-                , to: data.B
+                mensaje: data.M,
+                from: searchUserByConn(conn),
+                to: data.B
             };
             L++;
 
@@ -102,22 +106,22 @@ chat.on('connection', function (conn) {
             var pd = Pd.toBuffer().toString('base64');
 
             var msjFromTTPtoA = {
-                A: mensajes[data.L].from
-                , B: mensajes[data.L].to
-                , Td: Date.now()
-                , L: data.L
-                , K: "K"
-                , Pr: data.Pr
-                , Pd: pd
+                A: mensajes[data.L].from,
+                B: mensajes[data.L].to,
+                Td: Date.now(),
+                L: data.L,
+                K: "K",
+                Pr: data.Pr,
+                Pd: pd
             }
             console.log("msjFromTTPtoA:");
             console.log(msjFromTTPtoA);
             connections[connections2.indexOf(mensajes[data.L].to)].write(JSON.stringify(msjFromTTPtoA));
 
             var msjFromAtoB = {
-                L: data.L
-                , M: mensajes[data.L].mensaje
-                , Type: 3
+                L: data.L,
+                M: mensajes[data.L].mensaje,
+                Type: 3
             };
             if (mensajes[data.L].mensaje == "Juan, esto va a fallar") {
                 msjFromAtoB.M = "Ves, ha fallado";
@@ -132,12 +136,11 @@ chat.on('connection', function (conn) {
         }
     });
     conn.on('close', function () {
-        /* var a = NameConnections.indexOf(conn);
-         users.splice(users.indexOf(a), 1);
-         NameConnections.splice(a, 1);
-         for (var ii = 0; ii < connections.length; ii++) {
-         connections[ii].write("User " + number + " has disconnected");
-         }*/
+        var soyIdiota = connections2.indexOf(searchUserByConn(conn));
+        delete connections[soyIdiota];
+        delete connections2[soyIdiota];
+        console.log(connections);
+        console.log(connections2);
     });
 });
 
@@ -153,9 +156,9 @@ router.post('/sendKey', function (req, res) {
     publicKeys.findOneAndUpdate({
         user: req.body.user
     }, {
-        user: req.body.user
-        , e: req.body.e
-        , n: req.body.n
+        user: req.body.user,
+        e: req.body.e,
+        n: req.body.n
     }, {
         upsert: true
     }, function (err) {
@@ -177,11 +180,11 @@ router.post('/AtoB', function (req, res, next) {
 
 
     var MsjToA = {
-        A: "A"
-        , B: "B"
-        , Tr: Date.now()
-        , L: "L"
-        , Ps: "Ps"
+        A: "A",
+        B: "B",
+        Tr: Date.now(),
+        L: "L",
+        Ps: "Ps"
     };
 
     var Ps = bignum.fromBuffer(new Buffer(MsjToA.A + "," + MsjToA.B + "," + MsjToA.Tr + "," + MsjToA.L + "," + Po));
@@ -190,9 +193,9 @@ router.post('/AtoB', function (req, res, next) {
 
 
     var msjToB = {
-        A: "A"
-        , L: "L"
-        , Po: Po
+        A: "A",
+        L: "L",
+        Po: Po
     };
     //msjToB.Po = Po;
     console.log(JSON.stringify(msjToB));
@@ -203,9 +206,9 @@ router.post('/AtoB', function (req, res, next) {
     xhrTTP.send(JSON.stringify(msjToB));
 
     var message = new messages({
-        from: "A"
-        , to: "B"
-        , leido: false
+        from: "A",
+        to: "B",
+        leido: false
     });
     xhrTTP.onload = function () {
         console.log(xhrTTP.responseText);
@@ -235,8 +238,8 @@ router.post('/BtoTTP', function (req, res, next) {
 
 
     var msjFromAtoB = {
-        L: "L"
-        , M: m
+        L: "L",
+        M: m
     };
     res.send(JSON.stringify(msjFromAtoB));
 });
@@ -249,30 +252,29 @@ router.get('/AconfirmB', function (req, res) {
 
 
     messages.findOne({
-        'from': "A"
-        , 'leido': false
+        'from': "A",
+        'leido': false
     }, function (err, message) {
         if (err)
             res.sendStatus(500);
         else if (message) {
             res.send(JSON.stringify({
-                A: "A"
-                , B: "B"
-                , Td: Date.now()
-                , L: "L"
-                , K: "K"
-                , Pr: Pr
-                , Pd: pd
+                A: "A",
+                B: "B",
+                Td: Date.now(),
+                L: "L",
+                K: "K",
+                Pr: Pr,
+                Pd: pd
             }));
             messages.findOneAndUpdate({
-                    'from': "A"
-                    , 'leido': false
-                }, {
-                    leido: true
-                }, {
-                    upsert: false
-                }
-                , function (err, data) {});
+                'from': "A",
+                'leido': false
+            }, {
+                leido: true
+            }, {
+                upsert: false
+            }, function (err, data) {});
         } else
             res.sendStatus(404);
     });

@@ -12,9 +12,9 @@ angular.module('app.controllers', [])
     var chats = [];
 
     chats.push({
-        imagen: "img/marc.jpg"
-        , name: "Marc Martínez"
-        , text: "Ponte a programar"
+        imagen: "img/marc.jpg",
+        name: "Marc Martínez",
+        text: "Ponte a programar"
     });
 
     $scope.chats = chats;
@@ -64,15 +64,15 @@ angular.module('app.controllers', [])
     };
 
     $rootScope.currentConversation = {
-        n: 1
-        , messages: [{
-            me: false
-            , text: "Como va eso AdriCouci"
-            , ticks: [false, false, true, true, false]
+        n: 1,
+        messages: [{
+            me: false,
+            text: "Como va eso AdriCouci",
+            ticks: [true, true, false, false, false]
         }, {
-            me: true
-            , text: "Muy bien Marc, tu que tal?"
-            , ticks: [false, false, true, true, false]
+            me: true,
+            text: "Muy bien Marc, tu que tal?",
+            ticks: [true, true, false, false, false]
         }]
     };
 
@@ -86,11 +86,11 @@ angular.module('app.controllers', [])
         var P0 = keys.privateKey.encrypt(bytes);
 
         var msjToTTP = {
-            tipo: 1
-            , TTP: "TTP"
-            , B: "A"
-            , M: mensaje
-            , Po: Base64.encode(P0.toString())
+            tipo: 1,
+            TTP: "TTP",
+            B: "A",
+            M: mensaje,
+            Po: Base64.encode(P0.toString())
         };
 
         console.log(msjToTTP);
@@ -98,9 +98,9 @@ angular.module('app.controllers', [])
         $rootScope.currentConversation.n++;
 
         $rootScope.currentConversation.messages.push({
-            me: true
-            , text: mensaje
-            , ticks: [true, true, false, false, false]
+            me: true,
+            text: mensaje,
+            ticks: [true, true, false, false, false]
 
         });
 
