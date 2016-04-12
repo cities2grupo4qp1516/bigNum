@@ -5,8 +5,8 @@
 var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger', 'bd.sockjs']);
 
 bigNumApp.constant('config', {
-    URL: "http://localhost:3000/",
-    URLTTP: "http://localhost:4000/"
+    URL: "http://localhost:3000/"
+    , URLTTP: "http://localhost:4000/"
 });
 
 bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'rsaKey', 'Base64', 'config', 'mySocket', function ($scope, $rootScope, BigInteger, rsaKey, Base64, config, sock) {
@@ -23,9 +23,9 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
 
     var xhrTTP = new XMLHttpRequest();
     var keysToTTP = {
-        user: "A",
-        e: keys.publicKey.e.toString(),
-        n: keys.publicKey.n.toString()
+        user: "A"
+        , e: keys.publicKey.e.toString()
+        , n: keys.publicKey.n.toString()
     };
     xhrTTP.open("POST", config.URLTTP + "sendKey");
     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -34,50 +34,50 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
     $scope.conversations = {
         B: {
             name: "AdriCouci"
-        },
-        C: {
+        }
+        , C: {
             name: "Nacho"
-        },
-        D: {
+        }
+        , D: {
             name: "Javi"
         }
     };
     var conversaciones = [];
     conversaciones["AdriCouci"] = {
-        n: 1,
-        name: "AdriCouci",
-        messages: [{
-            me: true,
-            text: "Como va eso AdriCouci",
-            ticks: [true, true, false, false, false]
+        n: 1
+        , name: "AdriCouci"
+        , messages: [{
+            me: true
+            , text: "Como va eso AdriCouci"
+            , ticks: [true, true, false, false, false]
         }, {
-            me: false,
-            text: "Muy bien Marc, tu que tal?",
-            ticks: [false, false, true, true, false]
+            me: false
+            , text: "Muy bien Marc, tu que tal?"
+            , ticks: [false, false, true, true, false]
         }]
     };
     conversaciones["Nacho"] = {
-        name: "Nacho",
-        messages: [{
-            me: true,
-            text: "Nachooo! Como llevas el chat de la web?",
-            datetime: "2015-08-05T14:16:55+02:00"
+        name: "Nacho"
+        , messages: [{
+            me: true
+            , text: "Nachooo! Como llevas el chat de la web?"
+            , datetime: "2015-08-05T14:16:55+02:00"
         }, {
-            me: false,
-            text: "Pues bien! Creo que ha quedado guapo",
-            datetime: "2015-08-05T14:15:55+02:00"
+            me: false
+            , text: "Pues bien! Creo que ha quedado guapo"
+            , datetime: "2015-08-05T14:15:55+02:00"
         }]
     };
     conversaciones["Javi"] = {
-        name: "Nacho",
-        messages: [{
-            me: true,
-            text: "Buenas Javi! Cuando quedamos para hacer el Ionic?",
-            datetime: "2015-08-05T14:15:55+02:00"
+        name: "Nacho"
+        , messages: [{
+            me: true
+            , text: "Buenas Javi! Cuando quedamos para hacer el Ionic?"
+            , datetime: "2015-08-05T14:15:55+02:00"
         }, {
-            me: false,
-            text: "Cuando te vaya bien jefee!",
-            datetime: "2015-08-05T14:16:55+02:00"
+            me: false
+            , text: "Cuando te vaya bien jefee!"
+            , datetime: "2015-08-05T14:16:55+02:00"
         }]
     };
     console.log(conversaciones);
@@ -88,16 +88,16 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
     };
 
     $rootScope.currentConversation = {
-        n: 1,
-        name: "AdriCouci",
-        messages: [{
-            me: true,
-            text: "Como va eso AdriCouci",
-            ticks: [true, true, false, false, false]
+        n: 1
+        , name: "AdriCouci"
+        , messages: [{
+            me: true
+            , text: "Como va eso AdriCouci"
+            , ticks: [true, true, false, false, false]
         }, {
-            me: false,
-            text: "Muy bien Marc, tu que tal?",
-            ticks: [false, false, true, true, false]
+            me: false
+            , text: "Muy bien Marc, tu que tal?"
+            , ticks: [false, false, true, true, false]
         }]
     };
 
@@ -108,11 +108,11 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
         var bytes = new BigInteger(rsaKey.String2bin(msjToEncrypt));
         var P0 = keys.privateKey.encrypt(bytes);
         var msjToTTP = {
-            tipo: 1,
-            TTP: "TTP",
-            B: "B",
-            M: mensaje,
-            Po: Base64.encode(P0.toString())
+            tipo: 1
+            , TTP: "TTP"
+            , B: "B"
+            , M: mensaje
+            , Po: Base64.encode(P0.toString())
         };
         console.log($scope.message);
         sendMessage(JSON.stringify(msjToTTP));
@@ -120,9 +120,9 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
         $rootScope.currentConversation.n++;
 
         $rootScope.currentConversation.messages.push({
-            me: true,
-            text: mensaje,
-            ticks: [true, true, false, false, false]
+            me: true
+            , text: mensaje
+            , ticks: [true, true, false, false, false]
 
         });
 
@@ -135,11 +135,11 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
     };
     //TTP, B, M, PO
     var test = {
-        tipo: 1,
-        TTP: "TTP",
-        B: "B",
-        M: "HOLA",
-        PO: "cosa rara"
+        tipo: 1
+        , TTP: "TTP"
+        , B: "B"
+        , M: "HOLA"
+        , PO: "cosa rara"
     }
 
 }]).factory('mySocket', ['socketFactory', '$rootScope', 'BigInteger', 'rsaKey', 'Base64', 'config', '$http', function (socketFactory, $rootScope, BigInteger, rsaKey, Base64, config, $http) {
@@ -167,9 +167,9 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
             var Pr = Base64.encode($rootScope.keys.privateKey.encrypt(bytes).toString());
 
             var msjToTTP = {
-                tipo: 2,
-                L: mensaje.L,
-                Pr: Pr
+                tipo: 2
+                , L: mensaje.L
+                , Pr: Pr
             };
 
             sockjs.send(JSON.stringify(msjToTTP));
@@ -178,9 +178,9 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
         case 3:
             $rootScope.currentConversation.n++;
             $rootScope.currentConversation.messages.push({
-                me: false,
-                text: mensaje.M,
-                ticks: [true, false, false, false, false]
+                me: false
+                , text: mensaje.M
+                , ticks: [true, false, false, false, false]
             });
             $http.get(config.URLTTP + 'getKey/B').success(function (diferente) {
                 console.log("Ahi van las claves publicas!: ");
@@ -222,17 +222,17 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             }
         };
         $scope.currentConversation = {
-            name: "A",
-            messages: {
+            name: "A"
+            , messages: {
                 B: {
-                    me: false,
-                    text: "hola",
-                    datetime: "2015-08-05T14:15:55+02:00"
-                },
-                p: {
-                    me: true,
-                    text: "hola",
-                    datetime: "2015-08-05T14:16:55+02:00"
+                    me: false
+                    , text: "hola"
+                    , datetime: "2015-08-05T14:15:55+02:00"
+                }
+                , p: {
+                    me: true
+                    , text: "hola"
+                    , datetime: "2015-08-05T14:16:55+02:00"
                 }
             }
         };
@@ -303,18 +303,18 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             keys = rsaKey.generateKeys(512);
             var keysToFile = {
                 publicKey: {
-                    n: keys.publicKey.n.toString(),
-                    e: keys.publicKey.e.toString(),
-                    bits: keys.publicKey.bits
-                },
-                privateKey: {
-                    p: keys.privateKey.p.toString(),
-                    q: keys.privateKey.q.toString(),
-                    d: keys.privateKey.d.toString(),
-                    publicKey: {
-                        n: keys.publicKey.n.toString(),
-                        e: keys.publicKey.e.toString(),
-                        bits: keys.publicKey.bits
+                    n: keys.publicKey.n.toString()
+                    , e: keys.publicKey.e.toString()
+                    , bits: keys.publicKey.bits
+                }
+                , privateKey: {
+                    p: keys.privateKey.p.toString()
+                    , q: keys.privateKey.q.toString()
+                    , d: keys.privateKey.d.toString()
+                    , publicKey: {
+                        n: keys.publicKey.n.toString()
+                        , e: keys.publicKey.e.toString()
+                        , bits: keys.publicKey.bits
                     }
                 }
             };
@@ -323,9 +323,9 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                 type: 'text/plain'
             });
             var keysToTTP = {
-                user: "A",
-                e: keys.publicKey.e.toString(),
-                n: keys.publicKey.n.toString()
+                user: "A"
+                , e: keys.publicKey.e.toString()
+                , n: keys.publicKey.n.toString()
             };
 
             if (file !== null) {
@@ -351,9 +351,9 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                     var fileKeys = JSON.parse(Base64.decode(reader.result));
                     keys = rsaKey.importKeys(JSON.parse(Base64.decode(reader.result)));
                     var keysToTTP = {
-                        user: "A",
-                        e: keys.publicKey.e.toString(),
-                        n: keys.publicKey.n.toString()
+                        user: "A"
+                        , e: keys.publicKey.e.toString()
+                        , n: keys.publicKey.n.toString()
                     };
                     xhrTTP.open("POST", config.URLTTP + "sendKey");
                     xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -368,10 +368,10 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             var bytes = new BigInteger(rsaKey.String2bin(msjToEncrypt));
             var P0 = keys.privateKey.encrypt(bytes);
             var msjToTTP = {
-                TTP: "TTP",
-                B: "B",
-                M: mensaje,
-                Po: Base64.encode(P0.toString())
+                TTP: "TTP"
+                , B: "B"
+                , M: mensaje
+                , Po: Base64.encode(P0.toString())
             };
 
             console.log("1.- Soy A y mando esto al TTP: ");
@@ -394,24 +394,24 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                 this.bits = bits;
                 this.n = n;
                 this.e = e;
-            },
-            privateKey: function (p, q, d, publicKey) {
+            }
+            , privateKey: function (p, q, d, publicKey) {
                 this.p = p;
                 this.q = q;
                 this.d = d;
                 this.publicKey = publicKey;
-            },
-            importKeys: function (impotedKeys) {
+            }
+            , importKeys: function (impotedKeys) {
                 var keys = {};
                 impotedKeys.privateKey.publicKey.e = new BigInteger(impotedKeys.privateKey.publicKey.e);
                 impotedKeys.privateKey.publicKey.n = new BigInteger(impotedKeys.privateKey.publicKey.n);
                 keys.publicKey = new rsa.publicKey(impotedKeys.publicKey.bits, new BigInteger(impotedKeys.publicKey.n), new BigInteger(impotedKeys.publicKey.e));
                 keys.privateKey = new rsa.privateKey(new BigInteger(impotedKeys.privateKey.p), new BigInteger(impotedKeys.privateKey.q), new BigInteger(impotedKeys.privateKey.d), impotedKeys.privateKey.publicKey);
                 return keys;
-            },
-            generateKeys: function (bitlength) {
-                var p, q, n, phi, e, d, keys = {},
-                    one = new BigInteger('1');
+            }
+            , generateKeys: function (bitlength) {
+                var p, q, n, phi, e, d, keys = {}
+                    , one = new BigInteger('1');
                 this.bitlength = bitlength || 2048;
                 console.log("Generating RSA keys of", this.bitlength, "bits");
                 p = primeNumber.aleatorio(bitlength);
@@ -428,15 +428,15 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                 keys.publicKey = new rsa.publicKey(this.bitlength, n, e);
                 keys.privateKey = new rsa.privateKey(p, q, d, keys.publicKey);
                 return keys;
-            },
-            String2bin: function (str) {
+            }
+            , String2bin: function (str) {
                 var bytes = [];
                 for (var i = 0; i < str.length; ++i) {
                     bytes.push(str.charCodeAt(i));
                 }
                 return bytes;
-            },
-            bin2String: function (array) {
+            }
+            , bin2String: function (array) {
                 var result = "";
                 for (var i = 0; i < array.length; i++) {
                     result += String.fromCharCode(array[i]);
@@ -449,11 +449,11 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         rsa.publicKey.prototype = {
             encrypt: function (m) {
                 return m.modPow(this.e, this.n);
-            },
-            decrypt: function (c) {
+            }
+            , decrypt: function (c) {
                 return c.modPow(this.e, this.n);
-            },
-            dec: function (c, pass, passs) {
+            }
+            , dec: function (c, pass, passs) {
                 return c.modPow(pass, passs);
             }
         };
@@ -461,8 +461,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
         rsa.privateKey.prototype = {
             encrypt: function (m) {
                 return m.modPow(this.d, this.publicKey.n);
-            },
-            decrypt: function (c) {
+            }
+            , decrypt: function (c) {
                 return c.modPow(this.d, this.publicKey.n);
             }
         };
@@ -470,12 +470,12 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
     }])
     .factory('primeNumber', ['BigInteger', function (BigInteger) {
         Decimal.config({
-            precision: 300,
-            rounding: 4,
-            toExpNeg: -7,
-            toExpPos: 100,
-            maxE: 9e15,
-            minE: -9e15
+            precision: 300
+            , rounding: 4
+            , toExpNeg: -7
+            , toExpPos: 100
+            , maxE: 9e15
+            , minE: -9e15
         });
         var primo = {
             aleatorio: function (bitLength) {
@@ -495,8 +495,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
     }])
     .factory('Base64', [function () {
         var Base64 = {
-            _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-            encode: function (e) {
+            _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+            , encode: function (e) {
                 var t = "";
                 var n, r, i, s, o, u, a;
                 var f = 0;
@@ -517,8 +517,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                     t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
                 }
                 return t
-            },
-            decode: function (e) {
+            }
+            , decode: function (e) {
                 var t = "";
                 var n, r, i;
                 var s, o, u, a;
@@ -542,8 +542,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                 }
                 t = Base64._utf8_decode(t);
                 return t
-            },
-            _utf8_encode: function (e) {
+            }
+            , _utf8_encode: function (e) {
                 e = e.replace(/\r\n/g, "\n");
                 var t = "";
                 for (var n = 0; n < e.length; n++) {
@@ -560,8 +560,8 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
                     }
                 }
                 return t
-            },
-            _utf8_decode: function (e) {
+            }
+            , _utf8_decode: function (e) {
                 var t = "";
                 var n = 0;
                 var r = c1 = c2 = 0;
