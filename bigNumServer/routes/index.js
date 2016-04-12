@@ -7,7 +7,7 @@ var crypto = require('crypto');
 var sockjs = require('sockjs');
 
 var xhrTTP = new XMLHttpRequest();
-var keys_B = rsa.generateKeys(1024);
+//var keys_B = rsa.generateKeys(1024);
 var res;
 var res_keys;
 var Po;

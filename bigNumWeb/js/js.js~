@@ -413,7 +413,7 @@ function mlChatDate() {
 
     function filter(input) {
       if (!input || !input.length) { return; }
-
+console.log(moment(input).format('LLL'));
       return moment(input).format('LLL');
     }
   }
