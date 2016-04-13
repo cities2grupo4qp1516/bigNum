@@ -211,11 +211,14 @@ bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'r
     return mySocket;
 }]);
 
-bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Base64', 'config', function ($scope, BigInteger, rsaKey, Base64, config) {
+
+
+bigNumApp.controller('BignumController', ['$scope', '$http', 'BigInteger', 'rsaKey', 'Base64', 'config', function ($scope, $http, BigInteger, rsaKey, Base64, config) {
         var bigNumber;
         var keys;
         var xhr = new XMLHttpRequest();
         var xhrTTP = new XMLHttpRequest();
+        $scope.pseudonimo = "";
         $scope.conversations = {
             A: {
                 name: "A"
@@ -244,6 +247,7 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             link.href = uri;
             link.click();
         }
+
 
         xhr.onload = function () {
             BigNumber.config({
@@ -279,9 +283,20 @@ bigNumApp.controller('BignumController', ['$scope', 'BigInteger', 'rsaKey', 'Bas
             console.log("Error");
         };
 
-        xhr.open("GET", config.URL + "bignum");
+    /*    xhr.open("GET", config.URL + "bignum");
         xhr.responseType = "document";
-        xhr.send();
+        xhr.send();*/
+        $scope.registrar = function () {
+          
+          $http.post(config.URL + 'blind', $scope.pseudonimo)
+              .success(function (data) {
+
+              })
+              .error(function (data) {
+                  console.log('Error: ' + data);
+
+              });
+        };
 
         $scope.double = function () {
             var enviar = Base64.encode(bigNumber.toString());

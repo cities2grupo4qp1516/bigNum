@@ -169,7 +169,7 @@
         function initPageBackground() {
             if ($('body').hasClass('image-background')) { // IMAGE BACKGROUND
 
-                $("body").backstretch("images/fondo.png");
+                $("body").backstretch("images/ciego.jpg");
 
             } else if ($('body').hasClass('slideshow-background')) { // SLIDESHOW BACKGROUND
 
