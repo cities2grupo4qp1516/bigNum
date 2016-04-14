@@ -46,12 +46,12 @@
         /* ------------------------------------------------------------------------ */
         /*	PRELOADER
          /* ------------------------------------------------------------------------ */
-        var preloaderDelay = 350
-            , preloaderFadeOutTime = 800;
+        var preloaderDelay = 350,
+            preloaderFadeOutTime = 800;
 
         function hidePreloader() {
-            var loadingAnimation = $('#loading-animation')
-                , preloader = $('#preloader');
+            var loadingAnimation = $('#loading-animation'),
+                preloader = $('#preloader');
 
             loadingAnimation.fadeOut();
             preloader.delay(preloaderDelay).fadeOut(preloaderFadeOutTime);
@@ -95,8 +95,8 @@
 
             if (detectIE()) {
                 $('.animated').css({
-                    'display': 'block'
-                    , 'visibility': 'visible'
+                    'display': 'block',
+                    'visibility': 'visible'
                 });
             } else {
                 $('.animated').on('appear', function () {
@@ -139,21 +139,21 @@
 
         /* FULLPAGE */
         $('#fullpage').fullpage({
-            anchors: ['firstPage', 'secondPage', '3rdPage', '4thPage', 'lastPage']
-            , menu: '#menu'
-            , scrollingSpeed: 800
-            , autoScrolling: true
-            , scrollBar: true
-            , easing: 'easeInQuart'
-            , resize: true
-            , paddingTop: '80px'
-            , paddingBottom: '80px'
-            , responsive: 1000
-        , });
+            anchors: ['firstPage', 'secondPage', '3rdPage', '4thPage', 'lastPage'],
+            menu: '#menu',
+            scrollingSpeed: 800,
+            autoScrolling: true,
+            scrollBar: true,
+            easing: 'easeInQuart',
+            resize: true,
+            paddingTop: '80px',
+            paddingBottom: '80px',
+            responsive: 1000,
+        });
 
         $('a.go-slide').on('click', function () {
-            var elem = $(this)
-                , slideID = elem.data('slide');
+            var elem = $(this),
+                slideID = elem.data('slide');
 
             $.fn.fullpage.moveTo(slideID);
         });
@@ -171,23 +171,15 @@
 
                 $("body").backstretch("images/ciego.jpg");
 
-            } else if ($('body').hasClass('background-image')) { // IMAGE BACKGROUND
-
-                $("body").backstretch("images/fondo.png");
-
             } else if ($('body').hasClass('slideshow-background')) { // SLIDESHOW BACKGROUND
 
                 $("body").backstretch([
-                    "demo/background/image-1.jpg"
-
-                    
-                    , "demo/background/image-2.jpg"
-
-                    
-                    , "demo/background/image-3.jpg"
+                    "demo/background/image-1.jpg",
+                    "demo/background/image-2.jpg",
+                    "demo/background/image-3.jpg"
                 ], {
-                    duration: 3000
-                    , fade: 1200
+                    duration: 3000,
+                    fade: 1200
                 });
 
             } else if ($('body').hasClass('youtube-background')) { // YOUTUBE VIDEO BACKGROUND
@@ -211,41 +203,37 @@
 
                     var videos = [
                         {
-                            videoURL: "0pXYp72dwl0"
-                            , containment: 'body'
-                            , autoPlay: true
-                            , mute: true
-                            , startAt: 0
-                            , opacity: 1
-                            , loop: false
-                            , ratio: "4/3"
-                            , addRaster: true
-                        }
-
-                        
-                        , {
-                            videoURL: "9d8wWcJLnFI"
-                            , containment: 'body'
-                            , autoPlay: true
-                            , mute: true
-                            , startAt: 0
-                            , opacity: 1
-                            , loop: false
-                            , ratio: "4/3"
-                            , addRaster: false
-                        }
-
-                        
-                        , {
-                            videoURL: "nam90gorcPs"
-                            , containment: 'body'
-                            , autoPlay: true
-                            , mute: true
-                            , startAt: 0
-                            , opacity: 1
-                            , loop: false
-                            , ratio: "4/3"
-                            , addRaster: true
+                            videoURL: "0pXYp72dwl0",
+                            containment: 'body',
+                            autoPlay: true,
+                            mute: true,
+                            startAt: 0,
+                            opacity: 1,
+                            loop: false,
+                            ratio: "4/3",
+                            addRaster: true
+                        },
+                        {
+                            videoURL: "9d8wWcJLnFI",
+                            containment: 'body',
+                            autoPlay: true,
+                            mute: true,
+                            startAt: 0,
+                            opacity: 1,
+                            loop: false,
+                            ratio: "4/3",
+                            addRaster: false
+                        },
+                        {
+                            videoURL: "nam90gorcPs",
+                            containment: 'body',
+                            autoPlay: true,
+                            mute: true,
+                            startAt: 0,
+                            opacity: 1,
+                            loop: false,
+                            ratio: "4/3",
+                            addRaster: true
                         }
                     ];
 
@@ -271,14 +259,14 @@
 
         /* FLEXSLIDER */
         $('.flexslider').flexslider({
-            animation: "fade"
-            , animationLoop: true
-            , slideshowSpeed: 7000
-            , animationSpeed: 600
-            , controlNav: false
-            , directionNav: false
-            , keyboard: false
-            , start: function (slider) {
+            animation: "fade",
+            animationLoop: true,
+            slideshowSpeed: 7000,
+            animationSpeed: 600,
+            controlNav: false,
+            directionNav: false,
+            keyboard: false,
+            start: function (slider) {
                 $('body').removeClass('loading');
             }
         });
@@ -287,8 +275,8 @@
         /* COUNTDOWN */
         if ($('.countdown[data-countdown]').length) {
             $('.countdown[data-countdown]').each(function () {
-                var $this = $(this)
-                    , finalDate = $(this).data('countdown');
+                var $this = $(this),
+                    finalDate = $(this).data('countdown');
                 $this.countdown(finalDate, function (event) {
                     $this.html(event.strftime(
                         '<div class="counter-container"><div class="counter-box first"><div class="number">%-D</div><span>Día%!d</span></div><div class="counter-box"><div class="number">%H</div><span>Horas</span></div><div class="counter-box"><div class="number">%M</div><span>Minutos</span></div><div class="counter-box last"><div class="number">%S</div><span>Segundos</span></div></div>'
@@ -300,8 +288,8 @@
 
         /* MAILCHIMP */
         $('.mailchimp').ajaxChimp({
-            callback: mailchimpCallback
-            , url: "mailchimp-post-url" //Replace this with your own mailchimp post URL. Don't remove the "". Just paste the url inside "".
+            callback: mailchimpCallback,
+            url: "mailchimp-post-url" //Replace this with your own mailchimp post URL. Don't remove the "". Just paste the url inside "".
         });
 
         function mailchimpCallback(resp) {
@@ -321,10 +309,10 @@
             var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
             $.ajax({
-                url: 'subscribe.php'
-                , type: 'POST'
-                , dataType: 'json'
-                , data: {
+                url: 'subscribe.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
                     'email': email
                 },
 
@@ -362,17 +350,17 @@
         /* CONTACT FORM */
         function initContactForm() {
 
-            var scrollElement = $('html,body')
-                , contactForm = $('.contact-form')
-                , form_msg_timeout;
+            var scrollElement = $('html,body'),
+                contactForm = $('.contact-form'),
+                form_msg_timeout;
 
             contactForm.on('submit', function () {
 
-                var requiredFields = $(this).find('.required')
-                    , formFields = $(this).find('input, textarea')
-                    , formData = contactForm.serialize()
-                    , formAction = $(this).attr('action')
-                    , formSubmitMessage = $('.response-message');
+                var requiredFields = $(this).find('.required'),
+                    formFields = $(this).find('input, textarea'),
+                    formData = contactForm.serialize(),
+                    formAction = $(this).attr('action'),
+                    formSubmitMessage = $('.response-message');
 
                 requiredFields.each(function () {
 

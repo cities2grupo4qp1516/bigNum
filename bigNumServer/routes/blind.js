@@ -29,9 +29,20 @@ var publickey = {
 
 router.post('/', function(req, res, next) {
 
-  console.log(req.body);
-  res.send("OK");
-
+    console.log (req.body);
+    var bc = req.body;
+    var d= keys_blind.privateKey.d.toString();
+    var n= keys_blind.publicKey.n.toString();
+    console.log ("LA clave privada del servidor d: ",d);
+    console.log ("LA n: ",n);
+    //AQUI NO ME VA me salta que la bc.powm no es una funcion --que raro-- en pallier me pasa lo mismo//
+    var teta= bc.powm (keys_blind.privateKey.d, keys_blind.publicKey.n);
+    console.log (teta);
+    //SI FUNCIONA LO ANTERIOR EL SERVIDOR TE DA UNA FIRMA VALIDA"
+    var sign = {
+       teta: teta.toString()
+    };
+    res.send(JSON.stringify(sign));
 });
 
 module.exports = router;

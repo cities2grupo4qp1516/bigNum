@@ -2,7 +2,7 @@
 * Created by BestTeamEver on 21/02/2016.
 */
 
-var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger',]);
+var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger']);
 
 bigNumApp.constant('config', {
   URL: "http://localhost:3000/",
@@ -12,49 +12,61 @@ bigNumApp.constant('config', {
 
 
 bigNumApp.controller('BlindController', ['$scope', '$http', 'BigInteger', 'rsaKey', 'Base64', 'config', function ($scope, $http, BigInteger, rsaKey, Base64, config) {
-
-var xhr = new XMLHttpRequest();
+  var keys;
+  var xhr = new XMLHttpRequest();
   $scope.pseudonimo="";
   $scope.firma = "";
-  $scope.pseudohash;
 
-
-  $http.get(config.URL + 'blind/publicKey')
-    .success(function (data) {
-      //  console.log(data);
-      $scope.pseudohash = sha256($scope.pseudonimo);
-      var hash = {
-        HASH: $scope.pseudohash
-      };
-        var diff = Decimal.sub(Decimal.pow(2, data.bits), Decimal.pow(2, data.bits - 1));
-        var randomNumber = Decimal.add((Decimal.mul(Decimal.random(300), Decimal.pow(2, data.bits)).round()), diff);
-        var r = new BigInteger(randomNumber.toString());
-
-        m = new BigInteger(rsaKey.String2bin(hash.HASH));
-        var blindMsg = m.mul(r.modPow(data.e, data.n)).mod(data.n);
-        console.log(blindMsg);
-    })
-    .error(function (data) {
-      console.log('Error: ' + data);
-
-    });
-
-  $scope.registrar = function () {
-
-    $scope.pseudohash = sha256($scope.pseudonimo);
+  $scope.registrar = function (pseudonimo) {
+    console.log (pseudonimo);
+    var pseudohash = sha256(pseudonimo);
     var hash = {
-      HASH: $scope.pseudohash
+      HASH: pseudohash
     };
-
     console.log(hash);
-    $http.post(config.URL + 'blind', JSON.stringify(hash))
-    .success(function (data) {
-        console.log(data);
-    })
-    .error(function (data) {
-      console.log('Error: ' + data);
+    keys = rsaKey.generateKeys(1024);
+    $http.get(config.URL + 'blind/publicKey')
+        .success(function (data) {
+          var diff = Decimal.sub(Decimal.pow(2, data.bits), Decimal.pow(2, data.bits - 1));
+          var randomNumber = Decimal.add((Decimal.mul(Decimal.random(300), Decimal.pow(2, data.bits)).round()), diff);
+          var r = new BigInteger(randomNumber.toString());
+          console.log (r);
+          m = new BigInteger(rsaKey.String2bin(hash.HASH));
+          e=  new BigInteger(rsaKey.String2bin(data.e));
+          n=  new BigInteger(rsaKey.String2bin(data.n));
 
-    });
+          //var blindMsg = m.mul(r.modPow(e, data.n)).mod(data.n);
+
+          //HE COGIDO LA FIRMA CIEGA DEL JUAN PERO CON BIGINTEGER//
+          var blindMsg = m.multiply(r.modPow(e, n)).mod(n);
+          console.log('blind msg   m·r^e mod n:', '\n', blindMsg.toString(10), '\n');
+
+          var bc = keys.privateKey.encrypt(blindMsg);
+          console.log('(blind) encryption with private:', '\n', bc.toString(10), '\n');
+          var blind = {
+            bc: bc.toString(10)
+          };
+          $http.post(config.URL + 'blind', JSON.stringify(blind))
+              .success(function (data) {
+                //ESTA PARTE TENDRIA QUE FUNCIONAR//
+                c = bc.multiply(r.modInverse(n));
+                console.log('(unblinded) valid encryption    *1/r mod n:', '\n', c.toString(10), '\n');
+
+                d = keys.publicKey.decrypt(c);
+                //EL CONSOLE.LOG SIGUIENTE TAMPOCO FUNCIONA//
+                console.log('decryption with public:', '\n', new Buffer(d.toString(16),'hex').toString(), '\n');
+              })
+              .error(function (data) {
+                console.log('Error: ' + data);
+
+              });
+        })
+        .error(function (data) {
+          console.log('Error: ' + data);
+
+        });
+
+
 
   /*  xhr.open("POST", config.URL + "blind");
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

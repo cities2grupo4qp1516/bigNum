@@ -20,7 +20,6 @@ router.get('/', function(req, res, next) {
   var c1 = keys.publicKey.encrypt(num1);
   var c2 = keys.publicKey.encrypt(num2);
 
-
   console.log("############ Suma Homomórfica ###########");
   console.log('num1:', num1.toString());
   console.log('c1:', c1.c.toString(), '\n');
