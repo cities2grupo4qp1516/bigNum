@@ -2,12 +2,121 @@
  * Created by BestTeamEver on 21/02/2016.
  */
 
-var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger', 'bd.sockjs']);
+var bigNumApp = angular.module('bigNumApp', ['jsbn.BigInteger']);
 
 bigNumApp.constant('config', {
     URL: "http://localhost:3000/"
     , URLTTP: "http://localhost:4000/"
 });
+
+bigNumApp.controller('EncryptController', ['$scope', '$rootScope', '$http', 'BigInteger', 'rsaKey', 'primeNumber', 'Base64', function ($scope, $rootScope, $http, BigInteger, rsaKey, primeNumber, Base64) {
+
+    function downloadURI(uri, name) {
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        link.click();
+    }
+
+    $scope.encrypt = function () {
+        Decimal.config({
+            precision: 300
+        });
+        var keys = rsaKey.generateKeys(256);
+        var k = keys.privateKey.d;
+        console.log(k.toString());
+        var p = primeNumber.aleatorio(1500);
+        console.log("Esta es la p = ");
+        console.log(p.toString());
+        var bytes = new BigInteger(rsaKey.String2bin($scope.aencriptar));
+        var papafrancisco = keys.publicKey.encrypt(bytes);
+        $rootScope.encriptado = papafrancisco.toString();
+        var numerogrande1 = new BigInteger(Decimal.random(300).mul(Decimal(10).pow(300)).toString());
+        var numerogrande2 = new BigInteger(Decimal.random(300).mul(Decimal(10).pow(300)).toString());
+
+        var camacho = [];
+        var numeros = [];
+        for (var i = 1; i < 5; i++) {
+            camacho[i] = k.add(numerogrande1.multiply(new BigInteger(i.toString()))).add(numerogrande2.multiply(new BigInteger((i * i).toString()))).mod(p);
+            console.log("Camacho " + i + " = " + camacho[i]);
+            numeros[i] = new BigInteger(i.toString());
+
+            var file = "";
+            var dataTofile = {
+                n: keys.publicKey.n.toString()
+                , x: i
+                , camacho: camacho[i].toString()
+                , p: p.toString()
+            }
+            var data = new Blob([Base64.encode(JSON.stringify(dataTofile))], {
+                type: 'text/plain'
+            });
+            file = window.URL.createObjectURL(data);
+            downloadURI(file, "Llave número: " + i + ".txt");
+        }
+    }
+
+}]);
+
+bigNumApp.controller('DecryptController', ['$scope', '$rootScope', '$http', 'BigInteger', 'rsaKey', 'primeNumber', 'Base64', function ($scope, $rootScope, $http, BigInteger, rsaKey, primeNumber, Base64) {
+    var n
+        , x = []
+        , camacho = []
+        , i = 0
+        , p, ok = 0;
+    x.push("");
+    camacho.push("");
+    $scope.decrypt = function () {
+        var op1 = new BigInteger(((x[2] / (x[2] - x[1])) * (x[3] / (x[3] - x[1]))).toString()).mod(p);
+        var op2 = new BigInteger(((x[1] / (x[1] - x[2])) * (x[3] / (x[3] - x[2]))).toString()).mod(p);
+        var op3 = new BigInteger(((x[1] / (x[1] - x[3])) * (x[2] / (x[2] - x[3]))).toString()).mod(p);
+
+        var opfinal = (camacho[1].multiply(op1).add(camacho[2].multiply(op2)).add(camacho[3].multiply(op3))).mod(p);
+        console.log("Ahi esta la k");
+        console.log(opfinal.toString());
+
+        var desencriptado1 = new BigInteger($rootScope.encriptado).modPow(opfinal, n);
+        var texto = rsaKey.bin2String(desencriptado1.toByteArray());
+        console.log(texto);
+        $rootScope.encriptado = texto;
+    }
+
+    $scope.loadKeys = function () {
+        $('#files').val("");
+        $('#files').trigger('click');
+        jQuery("input#files").change(function () {
+            var files = document.getElementById('files').files;
+            var reader = new FileReader();
+            reader.readAsText(files[0]);
+
+            reader.onloadend = function () {
+                var fileKeys = JSON.parse(Base64.decode(reader.result));
+                //console.log(fileKeys);
+                x.forEach(function (item, index) {
+                    console.log(item); //nada
+                    console.log(fileKeys.x); //1
+                    if (fileKeys.x == item) {
+                        ok = 1;
+                    }
+                });
+
+                if (ok == 0) {
+                    n = new BigInteger(fileKeys.n);
+                    p = new BigInteger(fileKeys.p);
+                    camacho.push(new BigInteger(fileKeys.camacho));
+                    x.push(fileKeys.x);
+                    i++;
+                    if (i == 3) {
+                        $("#boton").css("display", "block");
+                    }
+                }
+                ok = 0;
+                console.log(x);
+            };
+        });
+    };
+
+}]);
 
 bigNumApp.controller('ChatController', ['$scope', '$rootScope', 'BigInteger', 'rsaKey', 'Base64', 'config', 'mySocket', function ($scope, $rootScope, BigInteger, rsaKey, Base64, config, sock) {
     $rootScope.keys = rsaKey.generateKeys(512);
