@@ -9,7 +9,7 @@ function L(a, n) {
     return (a.sub(1)).div(n);
 }
 
-rsa = {
+paillier = {
     publicKey: function (bits, n, g) {
         this.bits = bits;
         this.n = n;
@@ -58,8 +58,8 @@ rsa = {
         e = bignum(65537);
         d = e.invertm(phi);
 
-        keys.publicKey = new rsa.publicKey(this.bitlength, n, g);
-        keys.privateKey = new rsa.privateKey(lambda, mu, p, q, keys.publicKey);
+        keys.publicKey = new paillier.publicKey(this.bitlength, n, g);
+        keys.privateKey = new paillier.privateKey(lambda, mu, p, q, keys.publicKey);
 
 
         return keys;
@@ -67,7 +67,7 @@ rsa = {
 };
 
 
-rsa.publicKey.prototype = {
+paillier.publicKey.prototype = {
     encrypt: function (m) {
 
         var r = bignum.rand(this.n);
@@ -79,7 +79,7 @@ rsa.publicKey.prototype = {
     }
 };
 
-rsa.privateKey.prototype = {
+paillier.privateKey.prototype = {
     decrypt: function (c) {
 
         return L(c.powm(this.lambda, this.publicKey.n.pow(2)), this.publicKey.n).mul(this.mu).mod(this.publicKey.n);
@@ -88,4 +88,4 @@ rsa.privateKey.prototype = {
     }
 };
 
-module.exports = rsa;
+module.exports = paillier;
