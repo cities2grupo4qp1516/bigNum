@@ -171,6 +171,9 @@
 
                 $("body").backstretch("images/ciego.jpg");
 
+            } else if ($('body').hasClass('background-image')) {
+                $("body").backstretch("images/fondo.png");
+
             } else if ($('body').hasClass('slideshow-background')) { // SLIDESHOW BACKGROUND
 
                 $("body").backstretch([

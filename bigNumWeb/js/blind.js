@@ -18,7 +18,7 @@ bigNumApp.controller('BlindController', ['$scope', '$http', 'BigInteger', 'rsaKe
         $scope.firma = "";
 
         $scope.registrar = function (pseudonimo) {
-            $scope.firma = "Generando la forma, paciencia porfavor";
+            $scope.firma = "Generando la firma, paciencia porfavor";
             setTimeout(function () {
                 keys = rsaKey.generateKeys(1024);
                 // AngularJS unaware of update to $scope
