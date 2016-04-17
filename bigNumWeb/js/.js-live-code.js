@@ -24,10 +24,10 @@
          });
          var keys = rsaKey.generateKeys(256);
          var k = keys.privateKey.d;
-         console.log(k.toString());
+
          var p = primeNumber.aleatorio(1500);
-         console.log("Esta es la p = ");
-         console.log(p.toString());
+
+
          var bytes = new BigInteger(rsaKey.String2bin($scope.aencriptar));
          var papafrancisco = keys.publicKey.encrypt(bytes);
          $rootScope.encriptado = papafrancisco.toString();
@@ -38,7 +38,7 @@
          var numeros = [];
          for (var i = 1; i < 5; i++) {
              camacho[i] = k.add(numerogrande1.multiply(new BigInteger(i.toString()))).add(numerogrande2.multiply(new BigInteger((i * i).toString()))).mod(p);
-             console.log("Camacho " + i + " = " + camacho[i]);
+
              numeros[i] = new BigInteger(i.toString());
 
              var file = "";
@@ -73,22 +73,33 @@
              var a = new BigInteger("1");
              claves.x.forEach(function (itemx, indexx) {
                  if (indexx != index) {
-                     var d = claves.x[indexx].subtract(claves.x[index]);
-                     if (d.signum() == -1)
-                         d = d.add(claves.p);
-                     var e = d.modInverse(claves.p);
-                     var b = claves.x[indexx].multiply(e);
+console.log(indexx)
+
+                     //var b = (claves.x[indexx].divide(claves.x[indexx].subtract(claves.x[index]))).mod(claves.p);
+                     var b = claves.x[indexx].multiply((claves.x[indexx].subtract(claves.x[index])).modInverse(claves.p));
+
+
                      a = b.multiply(a).mod(claves.p);
                  }
              });
+
              var d = item.multiply(a).mod(claves.p);
              c = d.add(c).mod(claves.p);
          });
 
 
+
+         /*var op1 = new BigInteger(((x[2] / (x[2] - x[1])) * (x[3] / (x[3] - x[1]))).toString()).mod(p);
+         var op2 = new BigInteger(((x[1] / (x[1] - x[2])) * (x[3] / (x[3] - x[2]))).toString()).mod(p);
+         var op3 = new BigInteger(((x[1] / (x[1] - x[3])) * (x[2] / (x[2] - x[3]))).toString()).mod(p);
+
+         var opfinal = (camacho[1].multiply(op1).add(camacho[2].multiply(op2)).add(camacho[3].multiply(op3))).mod(p);
+
+
+*/
          var desencriptado1 = new BigInteger($rootScope.encriptado).modPow(c, claves.n);
          var texto = rsaKey.bin2String(desencriptado1.toByteArray());
-         console.log(texto);
+
          $rootScope.encriptado = texto;
      }
 
@@ -104,7 +115,7 @@
              reader.onloadend = function () {
                  var fileKeys = JSON.parse(Base64.decode(reader.result));
 
-                 console.log("x tiene " + claves.x.length);
+
 
                  claves.x.forEach(function (item, index) {
                      if (fileKeys.x == item) {
@@ -126,8 +137,8 @@
                      claves.i++;
                      if (claves.i == 3) {
                          $("#boton").css("display", "block");
-                         console.log("Vamos a ver si esta todo como deberia: ");
-                         console.log(claves);
+
+
                      }
                  }
                  //no es necesario, pero mas vale prevenir...
@@ -209,10 +220,10 @@
              datetime: "2015-08-05T14:16:55+02:00"
         }]
      };
-     console.log(conversaciones);
+
 
      $scope.switchConversation = function (conv) {
-         console.log(conv.name);
+
          $scope.currentConversation = conversaciones[conv.name];
      };
 
@@ -243,7 +254,7 @@
              M: mensaje,
              Po: Base64.encode(P0.toString())
          };
-         console.log($scope.message);
+
          sendMessage(JSON.stringify(msjToTTP));
 
          $rootScope.currentConversation.n++;
@@ -276,7 +287,7 @@
      var respuestaTTP = "";
 
      sockjs.onopen = function () {
-         console.log("ola");
+
          var mensaje = {};
          mensaje.tipo = 0;
          mensaje.user = "A";
@@ -285,8 +296,8 @@
      };
 
      sockjs.onmessage = function (e) {
-         console.log($rootScope.keys);
-         console.log(e.data);
+
+
          var mensaje = JSON.parse(e.data);
          switch (mensaje.Type) {
          case 2:
@@ -312,21 +323,21 @@
                  ticks: [true, false, false, false, false]
              });
              $http.get(config.URLTTP + 'getKey/B').success(function (diferente) {
-                 console.log("Ahi van las claves publicas!: ");
-                 console.log(diferente);
+
+
 
                  var camacho = rsaKey.bin2String($rootScope.keys.publicKey.dec(new BigInteger(Base64.decode($rootScope.LandP0[mensaje.L])), new BigInteger(diferente.e), new BigInteger(diferente.n)).toByteArray()).split(",")[2] == sha256(mensaje.M) ? function () {
-                     console.log("mensaje correcto");
+
                      $rootScope.currentConversation.messages[$rootScope.currentConversation.n].ticks = [false, false, true, true, false];
                  } : function () {
-                     console.log("mensaje incorrecto");
+
                      $rootScope.currentConversation.messages[$rootScope.currentConversation.n].ticks = [false, false, false, false, true];
                  };
 
                  camacho();
 
              }).error(function (err) {
-                 console.log("Muy mal pollito = " + err);
+
              });
              break;
 
@@ -394,10 +405,10 @@
              }, 1000);
          };
          xhr.onerror = function () {
-             console.log("Error obteniendo el XML.");
+
          };
          xhrTTP.onload = function () {
-             console.log("2.- El TTP me contesta a mi peticion: ");
+
              var respuesta;
              try {
                  respuesta = JSON.parse(xhrTTP.response);
@@ -406,10 +417,10 @@
              } catch (err) {
                  alert("B aun no ha leido el mensaje");
              }
-             console.log(respuesta);
+
          };
          xhrTTP.onerror = function () {
-             console.log("Error");
+
          };
 
          /*    xhr.open("GET", config.URL + "bignum");
@@ -422,7 +433,7 @@
 
                  })
                  .error(function (data) {
-                     console.log('Error: ' + data);
+
 
                  });
          };
@@ -518,8 +529,8 @@
                  Po: Base64.encode(P0.toString())
              };
 
-             console.log("1.- Soy A y mando esto al TTP: ");
-             console.log(msjToTTP);
+
+
              xhrTTP.open("POST", config.URLTTP + "AtoB");
              xhrTTP.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
              xhrTTP.send(JSON.stringify(msjToTTP));
@@ -557,7 +568,7 @@
                  var p, q, n, phi, e, d, keys = {},
                      one = new BigInteger('1');
                  this.bitlength = bitlength || 2048;
-                 console.log("Generating RSA keys of", this.bitlength, "bits");
+
                  p = primeNumber.aleatorio(bitlength);
                  do {
                      q = primeNumber.aleatorio(bitlength);
@@ -738,7 +749,7 @@
          if (!input || !input.length) {
              return;
          }
-         console.log(moment(input).format('LLL'));
+
          return moment(input).format('LLL');
      }
  }
