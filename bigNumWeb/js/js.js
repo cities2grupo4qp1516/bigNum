@@ -114,7 +114,7 @@
 
                  if (ok == 0) {
                      if (claves.n == null && claves.p == null) {
-                         //solo hace falta cargar los modulos la primera vez, asi ademas sirven para comprovar que los demas ficheros son de la misma guerra y no liarla 
+                         //solo hace falta cargar los modulos la primera vez, asi ademas sirven para comprobar que los demas ficheros son de la misma guerra y no liarla 
                          claves.n = new BigInteger(fileKeys.n.toString());
                          claves.p = new BigInteger(fileKeys.p.toString());
                      } else if (fileKeys.n != claves.n && fileKeys.p != claves.p) {
